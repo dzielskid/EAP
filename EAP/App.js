@@ -1,5 +1,5 @@
 /*=============================================================================
- |   File Purpose:  Starts app as whole
+ |   File Purpose:  Starts app as whole, Main Screen
  |
  |       Author:  
  |     Language:  JavaScript
@@ -18,21 +18,46 @@
  |
  |    Algorithm:  
  |
- |   Required Features Not Included:  Start on Main Screen
+ |   Required Features Not Included:
  |
  |   Known Bugs:  
  |
  *===========================================================================*/
 
+ 
+import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
+import Navigator from './routes/homeStack';
+
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {NavigationContainer} from '@react-navigation/native';
+
+const Drawer = createDrawerNavigator();
+
 export default function App() {
   return (
+    <Navigator/>
+    /*
+    <NavigationContainer>
+      <Drawer.Navigator 
+        drawerType="front"
+        initialRouteName="Profile"
+        drawerContentOption={{
+          activeTintColor: '#e91e63',
+          itemStyle:{marginVertical: 10},
+        }}
+      >
+      </Drawer.Navigator>
+    </NavigationContainer>
+    */
+    /*
     <View style={styles.container}>
       <Text>One small step for man...</Text>
       <StatusBar style="auto" />
     </View>
+    */
   );
 }
 
