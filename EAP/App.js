@@ -25,12 +25,16 @@
  *===========================================================================*/
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>One small step for man...</Text>
+      <Text>One small step for man..</Text>
+      <TextInput 
+        style={styles.input}
+        placeholder='Search Institutions...'
+      />
       <StatusBar style="auto" />
     </View>
   );
@@ -42,5 +46,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  input:{
+    borderWidth:1,
+    borderColor: '#777',
+    padding:8,
+    margin: 10,
+    width: 200,
   },
 });
