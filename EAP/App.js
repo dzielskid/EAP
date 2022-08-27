@@ -24,17 +24,24 @@
  |
  *===========================================================================*/
 
+import React, {useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 
 export default function App() {
+  const [searchTerm, setTerm] = useState('');
+  //To use this ^^^ use {searchTerm}
+
+  console.log('App Starting..');
   return (
     <View style={styles.container}>
       <Text>One small step for man..</Text>
       <TextInput 
         style={styles.input}
         placeholder='Search Institutions...'
+        onChangeText={(val) => setName(val)}  //Sets searchTerm to whatever is typed in search textbox at any moment
       />
+      {institution.map((item))}
       <StatusBar style="auto" />
     </View>
   );
