@@ -52,61 +52,42 @@ import moment from 'moment';
           )
         }
       
-        /*------------------------------------------------- TimerButton -----
-               |  Function TimerButton
-               |
-               |  Purpose: Create a button with the standard for timer buttons (i.e. Start, Stop, Stamp)
-               |
-               |  Parameters:
-               |      title (IN) - What the button will say
-               |      color (IN) - text color for title        
-               |      background (IN) - background color of button        |
-               |  Returns:  a view with the button
-               *-------------------------------------------------------------------*/
-      
-        function TimerButton({ title, color, background, onPress, disabled }){
-          return(
-            <TouchableOpacity 
-              onPress={() => !disabled && onPress()}
-              style={[ styles.button,{backgroundColor: background} ]}
-              activeOpacity={disabled ? 1.0 : 0.7}  //if disabled, don't want to change opacity on click, otherwise dim opacity on click
-            >
-                <Text style={{ color }}>{title}</Text>
-            </TouchableOpacity>
-          )
-        }
-      
-        /*------------------------------------------------- ButtonRow -----
-               |  Function ButtonRow
-               |
-               |  Purpose:  Puts buttons into an even horizontal row
-               |
-               |  Parameters:
-               |      children - buttons that you wish to put into a row horizontally
-               |
-               |  Returns:  view with children buttons in a row
-               *-------------------------------------------------------------------*/
-      
         function ButtonsRow({ children }){
           return (
             <View style = {styles.butonsRow}>{children}</View>
           )
         }
-      
+
+        function TimerButton({ title, color, background, onPress, disabled  }) {
+            return (
+                <TouchableOpacity
+                    onPress={() => !disabled && onPress()}
+                    style={[styles.button, { backgroundColor: background }]}
+                    activeOpacity={disabled ? 1.0 : 0.7}
+                >
+                    <View style={styles.TimerButton}>
+                        <Text style={[styles.buttonTitle, { color }]}>{title}</Text>
+                    </View>
+                </TouchableOpacity>
+            )
+        }
+ 
         function Stamp({ interval }){
           return(
-            <View style={styles.lap}>
-              <Text style={styles.lapTimer}>Event at {interval}: </Text>
-              <Timer style={styles.lapTimer} interval={interval}/>
+            <View style={styles.stamp}>
+                  <Text> curTime ( </Text>
+                  <Timer style={styles.stampTimer} interval={interval} />
+                  <Text> ) - Sample Text</Text>
            </View>
           )
         }
       
-        function LapsTable({ laps }){
+function StampsTable({ stamps }) {
+            const curTime = moment().format('MM/DD hh:mm:ss')
           return(
             <ScrollView style={styles.ScrollView}>
-              {laps.map((lap, index) => (
-                <Stamp number={index} key={index} interval = {lap}/>
+              {stamps.map((stamp, index) => (
+                <Stamp number={index} key={index} interval = {stamp}/>
               ))}
             </ScrollView>
       
@@ -122,7 +103,7 @@ export default class App extends Component {
     this.state = {
       start: 0,
       now: 0, //start-now=timer duration
-      laps: [ ],
+      stamps: [ ],
     }
   }
 
@@ -135,36 +116,113 @@ export default class App extends Component {
     this.setState({
       start: now,
       now,
-      laps: [0],
+      stamps: [0],
     })
     this.timer = setInterval(() =>{
       this.setState({ now: new Date().getTime()})
-    }, 100)
+    }, 1000)
   }
 
+    start = () => {
+        const now = new Date().getTime()
+        this.setState({
+            start: now,
+            now,
+            stamps: [0],
+        })
+        this.timer = setInterval(() => {
+            this.setState({ now: new Date().getTime() })
+        }, 1000)
+    }
+
+    stamp = () => {
+        const timestamp = new Date().getTime()
+        const { stamps, now, start } = this.state
+        const [firstStamp, ...other] = stamps
+        this.setState({
+            stamps: [0, firstStamp + now - start, ...other],
+            start: timestamp,
+            now: timestamp,
+        })
+    }
+
+    stop = () => {
+        clearInterval(this.timer)
+        const { stamps, now, start } = this.state
+        const [firstStamp, ...other] = stamps
+        this.setState({
+            stamps: [firstStamp + now - start, ...other],
+            start: 0,
+            now: 0,
+        })
+    }
+
+    reset = () => {
+        this.setState({
+            stamps: [],
+            start: 0,
+            now: 0,
+        })
+    }
+
+    resume = () => {
+        const now = new Date().getTime()
+        this.setState({
+            start: now,
+            now,
+        })
+        this.timer = setInterval(() => {
+            thisthis.setState({ now: new Date().getTime()})
+        }, 1000)
+    }
+
   render(){
-    const { now, start, laps } = this.state
+    const { now, start, stamps } = this.state
     const timer = now - start
     return (
       <View style={styles.container}>
-        <Timer interval={timer} style={styles.timer}/>
-        <ButtonsRow>
-          <TimerButton 
-            title='Start' 
-            color='#FFFFFF' 
-            background='#3ADB21'
-            onPress={this.start}
-          />
-          <TimerButton title='Stamp' color='#FFFFFF' background='#2159DB'/>
-        </ButtonsRow>
-        <LapsTable laps={laps}/>
-        <TextInput 
-          style={styles.input}
-          placeholder='Search Institutions...'
-          onChangeText={(val) => setName(val)}  //Sets searchTerm to whatever is typed in search textbox at any moment
+        <Timer interval={timer} style={styles.timer} />
+            {stamps.length === 0 && (
+                <ButtonsRow>
+                    <TimerButton
+                        title='Start'
+                        color='#FFFFFF'
+                        background='#3ADB21'
+                        onPress={this.start}
+                    />
+                    <TimerButton
+                        title='Stamp'
+                        color='#FFFFFF'
+                        background='#2159DB'
+                        disabled
+                    />
+                </ButtonsRow>
+            )}
+            {start > 0 && (
+                <ButtonsRow>
+                    <TimerButton
+                        title='Stop'
+                        color='#FFFFFF'
+                        background='#ff0000'
+                        onPress={this.stop}
+                    />
+                    <TimerButton
+                        title='Stamp'
+                        color='#FFFFFF'
+                        background='#2159DB'
+                        onPress={this.stamp}
+                    />
+                </ButtonsRow>
+            )}
+            
+        <StampsTable stamps={stamps}/>
+        <TextInput
+           style={styles.input}
+           placeholder='Search Institutions...'
+           onChangeText={(val) => setName(val)}  //Sets searchTerm to whatever is typed in search textbox at any moment
         />
         <StatusBar style="auto" />
-      </View>
+        </View>
     );
   }
 }
@@ -175,7 +233,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     //justifyContent: 'center', //aligns along center vertically
-    paddingTop: 150,
+    paddingTop: 130,
     paddingHorizontal: 20,
   },
   input:{
@@ -187,38 +245,42 @@ const styles = StyleSheet.create({
   },
   timer:{
     fontSize:76,
-    fontWeight: '200',
+      fontWeight: '200',
+    width:110,
   },
   button: {
     width: 160,
     height: 50,
     borderRadius: 30,
     justifyContent: 'center',
-    alignItems: 'center',
-  },
+      alignItems: 'center',
+    },
   buttonTitle: {
-    fontSize: 50,
+    fontSize: 35,
   },
   butonsRow: {
     flexDirection: 'row',
     alignSlef: 'stretch',
     justifyContent: 'space-between',
     marginTop: 20,
-    marginBottom: 30,
+      marginBottom: 30,
   },
-  lapText: {
-    color: '#000000'
+  stampText: {
+      color: '#000000',
+      fontSize: 18,
   },
-  lapTimer:{
-    width:30,
-  },
-  lap:{
-    flexirection: 'row',
-    justifyContent: 'space-between',
+  stamp:{
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    borderTopWidth: 1,
     paddingVertical: 5,
-  },
+    },
+    stampTimer: {
+
+    },
   ScrollView:{
-    alignSelf: 'stretch',
+      alignSelf: 'center',
+      width: '80%',
   },
   timerContainer:{
     flexDirection: 'row',
