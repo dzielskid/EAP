@@ -1,288 +1,280 @@
-/*=============================================================================
- |   File Purpose:  Starts app as whole
- |
- |       Author:  
- |     Language:  JavaScript
- |                      NAME OF THE COMPILER USED TO COMPILE IT WHEN IT
- |                      WAS TESTED
- |   To Compile:  in terminal run 'npm start' command
- |
- +-----------------------------------------------------------------------------
- |
- |  Description:  DESCRIBE THE PROBLEM THAT WAS WRITTEN TO
- |      SOLVE.
- |
- |        Input:  NONE
- |
- |       Output:  DESCRIBE THE OUTPUT PRODUCED.
- |
- |    Algorithm:  
- |
- |   Required Features Not Included:  Start on Main Screen
- |
- |   Known Bugs:  
- |
- *===========================================================================*/
+import React, { Component } from 'react'
+import {
+  StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert
+  } from 'react-native'
+import moment from 'moment'
+import DialogInput from 'react-native-dialog-input'
 
-import React, {useState, Component } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
-import moment from 'moment';
+function Timer({ interval, style }) {
+  const pad = (n) => n < 10 ? '0' + n : n
+  const duration = moment.duration(interval)
+  return (
+    <View style={styles.timerContainer}>
+      <Text style={style}>{pad(duration.hours())}:</Text>
+      <Text style={style}>{pad(duration.minutes())}:</Text>
+      <Text style={style}>{pad(duration.seconds())}</Text>
+    </View>
+  )
+}
 
-  /*------------------------------------------------- Timer -----
-         |  Function Timer
-         |
-         |  Purpose:  uses the package 'moment', a very popular Javascript package for counting time to create a timer that counts hours, minutes and seconds
-         |
-         |  Parameters:
-         |      interval (IN) - 
-         |
-         |  Returns:  view of timer current hours:minutes:seconds in styles.timer
-         *-------------------------------------------------------------------*/
+function RoundButton({ title, color, background, onPress, disabled }) {
+  return (
+    <TouchableOpacity
+      onPress={() => !disabled && onPress()}
+      style={[ styles.button, { backgroundColor: background }]}
+      activeOpacity={disabled ? 1.0 : 0.7}
+    >
+      <View style={styles.buttonBorder}>
+        <Text style={[ styles.buttonTitle, { color }]}>{title}</Text>
+      </View>
+    </TouchableOpacity>
+  )
+}
+function Lap({ number, interval, fastest, slowest }) {
+  const lapStyle = [
+    styles.lapText,
+    fastest && styles.fastest,
+    slowest && styles.slowest,
+  ]
+  return (
+    <View style={styles.lap}>
+      <Text style={lapStyle}>Stamp {number}</Text>
+      <Timer style={[lapStyle, styles.lapTimer]} interval={interval}/>
+    </View>
+  )
+}
 
-         function Timer({interval, style}){
-          const pad = (n) => n < 10 ? '0' + n : n
-          const duration = moment.duration(interval)
-          return (
-            <View style={styles.timerContainer}>
-              <Text style={style}>{pad(duration.hours())}:</Text>
-              <Text style={style}>{pad(duration.minutes())}:</Text>
-              <Text style={style}>{pad(duration.seconds())}</Text>
-            </View>
-          )
-        }
-      
-        function ButtonsRow({ children }){
-          return (
-            <View style = {styles.butonsRow}>{children}</View>
-          )
-        }
+function LapsTable({ laps, timer }) {
+  const finishedLaps = laps.slice(1)
+  let min = Number.MAX_SAFE_INTEGER
+  let max = Number.MIN_SAFE_INTEGER
+  if (finishedLaps.length >= 2) {
+    finishedLaps.forEach(lap => {
+      if (lap < min) min = lap
+      if (lap > max) max = lap
+    })
+  }
+  return (
+    <ScrollView style={styles.scrollView}>
+      {laps.map((lap, index) => (
+        <Lap
+          number={laps.length - index}
+          key={laps.length - index}
+          interval={index === 0 ? timer + lap : lap}
+          fastest={lap === min}
+          slowest={lap === max}
+        />
+      ))}
+    </ScrollView>
+  )
+}
 
-        function TimerButton({ title, color, background, onPress, disabled  }) {
-            return (
-                <TouchableOpacity
-                    onPress={() => !disabled && onPress()}
-                    style={[styles.button, { backgroundColor: background }]}
-                    activeOpacity={disabled ? 1.0 : 0.7}
-                >
-                    <View style={styles.TimerButton}>
-                        <Text style={[styles.buttonTitle, { color }]}>{title}</Text>
-                    </View>
-                </TouchableOpacity>
-            )
-        }
- 
-        function Stamp({ interval }){
-          return(
-            <View style={styles.stamp}>
-                  <Text> curTime ( </Text>
-                  <Timer style={styles.stampTimer} interval={interval} />
-                  <Text> ) - Sample Text</Text>
-           </View>
-          )
-        }
-      
-function StampsTable({ stamps }) {
-            const curTime = moment().format('MM/DD hh:mm:ss')
-          return(
-            <ScrollView style={styles.ScrollView}>
-              {stamps.map((stamp, index) => (
-                <Stamp number={index} key={index} interval = {stamp}/>
-              ))}
-            </ScrollView>
-      
-          )
-        }
-
+function ButtonsRow({ children }) {
+  return (
+    <View style={styles.buttonsRow}>{children}</View>
+  )
+}
 export default class App extends Component {
-  //const [searchTerm, setTerm] = useState('');
-  //To use this ^^^ use {searchTerm}
-
   constructor(props) {
     super(props)
     this.state = {
       start: 0,
-      now: 0, //start-now=timer duration
-      stamps: [ ],
+      now: 0,
+      laps: [ ],
     }
   }
-
-  componentWillUnmount(){
+  componentWillUnmount() {
     clearInterval(this.timer)
   }
 
   start = () => {
-    const now = new Date().getTime
+    const now = new Date().getTime()
     this.setState({
       start: now,
       now,
-      stamps: [0],
+      laps: [0],
     })
-    this.timer = setInterval(() =>{
+    this.timer = setInterval(() => {
       this.setState({ now: new Date().getTime()})
-    }, 1000)
+    }, 100)
+  }
+  
+  lap = () => {
+    const timestamp = new Date().getTime()
+    const { laps, now, start } = this.state
+    const [firstLap, ...other] = laps
+    this.setState({
+      laps: [0, firstLap + now - start, ...other],
+      start: timestamp,
+      now: timestamp,
+    })
+    Alert.alert('', 'Description:',[
+      {text: 'Submit', onPress: () => console.log('New event entered.')}
+    ])
   }
 
-    start = () => {
-        const now = new Date().getTime()
-        this.setState({
-            start: now,
-            now,
-            stamps: [0],
-        })
-        this.timer = setInterval(() => {
-            this.setState({ now: new Date().getTime() })
-        }, 1000)
-    }
-
-    stamp = () => {
-        const timestamp = new Date().getTime()
-        const { stamps, now, start } = this.state
-        const [firstStamp, ...other] = stamps
-        this.setState({
-            stamps: [0, firstStamp + now - start, ...other],
-            start: timestamp,
-            now: timestamp,
-        })
-    }
-
-    stop = () => {
-        clearInterval(this.timer)
-        const { stamps, now, start } = this.state
-        const [firstStamp, ...other] = stamps
-        this.setState({
-            stamps: [firstStamp + now - start, ...other],
-            start: 0,
-            now: 0,
-        })
-    }
-
-    reset = () => {
-        this.setState({
-            stamps: [],
-            start: 0,
-            now: 0,
-        })
-    }
-
-    resume = () => {
-        const now = new Date().getTime()
-        this.setState({
-            start: now,
-            now,
-        })
-        this.timer = setInterval(() => {
-            thisthis.setState({ now: new Date().getTime()})
-        }, 1000)
-    }
-
-  render(){
-    const { now, start, stamps } = this.state
+  stop = () => {
+    clearInterval(this.timer)
+    const { laps, now, start } = this.state
+    const [firstLap, ...other] = laps
+    this.setState({
+      laps: [firstLap + now - start, ...other],
+      start: 0,
+      now: 0,
+    })
+    Alert.alert('', 'Name Incident: ', [
+      {text: 'Submit', onPress: () => console.log('New Incident entered.')}
+    ])
+  }
+  reset = () => {
+    this.setState({
+      laps: [],
+      start: 0,
+      now: 0,
+    })
+  }
+  resume = () => {
+    const now = new Date().getTime()
+    this.setState({
+      start: now,
+      now,
+    })
+    this.timer = setInterval(() => {
+      this.setState({ now: new Date().getTime()})
+    }, 100)
+  }
+  render() {
+    const { now, start, laps } = this.state
     const timer = now - start
     return (
       <View style={styles.container}>
-        <Timer interval={timer} style={styles.timer} />
-            {stamps.length === 0 && (
-                <ButtonsRow>
-                    <TimerButton
-                        title='Start'
-                        color='#FFFFFF'
-                        background='#3ADB21'
-                        onPress={this.start}
-                    />
-                    <TimerButton
-                        title='Stamp'
-                        color='#FFFFFF'
-                        background='#2159DB'
-                        disabled
-                    />
-                </ButtonsRow>
-            )}
-            {start > 0 && (
-                <ButtonsRow>
-                    <TimerButton
-                        title='Stop'
-                        color='#FFFFFF'
-                        background='#ff0000'
-                        onPress={this.stop}
-                    />
-                    <TimerButton
-                        title='Stamp'
-                        color='#FFFFFF'
-                        background='#2159DB'
-                        onPress={this.stamp}
-                    />
-                </ButtonsRow>
-            )}
-            
-        <StampsTable stamps={stamps}/>
-        <TextInput
-           style={styles.input}
-           placeholder='Search Institutions...'
-           onChangeText={(val) => setName(val)}  //Sets searchTerm to whatever is typed in search textbox at any moment
+        <Timer
+          interval={laps.reduce((total, curr) => total + curr, 0) + timer}
+          style={styles.timer}
         />
-        <StatusBar style="auto" />
-        </View>
-    );
+        {laps.length === 0 && (
+          <ButtonsRow>
+          <RoundButton
+              title='Start'
+              color='#FFFFFF'
+              background='#3ADB21'
+              onPress={this.start}
+            />
+            <RoundButton
+              title='Stamp'
+              color='#FFFFFF'
+              background='#151515'
+              disabled
+            />
+          </ButtonsRow>
+        )}
+        {start > 0 && (
+          <ButtonsRow>
+            <RoundButton
+              title='Stop'
+              color='#FFFFFF'
+              background='#F10F0F'
+              onPress={this.stop}
+            />
+            <RoundButton
+              title='Stamp'
+              color='#FFFFFF'
+              background='#2159DB'
+              onPress={this.lap}
+            />
+          </ButtonsRow>
+        )}
+        {laps.length > 0 && start === 0 && (
+          <ButtonsRow>
+            <RoundButton
+              title='Start'
+              color='#FFFFFF'
+              background='#3ADB21'
+              onPress={this.resume}
+            />
+            <RoundButton
+              title='Reset'
+              color='#FFFFFF'
+              background='#3D3D3D'
+              onPress={this.reset}
+            />
+          </ButtonsRow>
+        )}
+        <LapsTable laps={laps} timer={timer}/>
+      </View>
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
-    //justifyContent: 'center', //aligns along center vertically
     paddingTop: 130,
     paddingHorizontal: 20,
   },
-  input:{
-    borderWidth:1,
-    borderColor: '#777',
-    padding:8,
-    margin: 10,
-    width: 200,
+  header: {
+    flex:1,
+    backgroundColor: '#000000',
+    paddingTop: 130,
+    algSelf: 'stretch',
   },
-  timer:{
-    fontSize:76,
-      fontWeight: '200',
-    width:110,
+  timer: {
+    color: '#000000',
+    fontSize: 76,
+    fontWeight: '300',
+    width: 110,
   },
   button: {
     width: 160,
     height: 50,
-    borderRadius: 30,
+    borderRadius: 40,
     justifyContent: 'center',
-      alignItems: 'center',
-    },
+    alignItems: 'center',
+  },
   buttonTitle: {
-    fontSize: 35,
+    fontSize: 18,
   },
-  butonsRow: {
+  buttonBorder: {
+    width: 165,
+    height: 55,
+    borderRadius: 38,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonsRow: {
     flexDirection: 'row',
-    alignSlef: 'stretch',
+    alignSelf: 'stretch',
     justifyContent: 'space-between',
-    marginTop: 20,
-      marginBottom: 30,
+    marginTop: 30,
+    marginBottom: 30,
   },
-  stampText: {
-      color: '#000000',
-      fontSize: 18,
+  lapText: {
+    color: '#000000',
+    fontSize: 18,
   },
-  stamp:{
+  lapTimer: {
+    width: 30,
+  },
+  lap: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
+    borderColor: '#151515',
     borderTopWidth: 1,
-    paddingVertical: 5,
-    },
-    stampTimer: {
-
-    },
-  ScrollView:{
-      alignSelf: 'center',
-      width: '80%',
+    paddingVertical: 10,
   },
-  timerContainer:{
+  scrollView: {
+    alignSelf: 'stretch',
+  },
+  fastest: {
+    color: '#000000',
+  },
+  slowest: {
+    color: '#000000',
+  },
+  timerContainer: {
     flexDirection: 'row',
-  },
-});
+  }
+})

@@ -94,7 +94,7 @@ import moment from 'moment';
           function Stamp({ interval }){
             return(
              <View style={styles.lap}>
-               <Text style={styles.lapTimer}>{interval} : Sample text</Text>
+               <Text style={styles.lapTimer}>Event at {interval}: </Text>
                <Timer style={styles.lapTimer} interval={interval}/>
               </View>
             )

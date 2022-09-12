@@ -7,6 +7,7 @@
     <list default="true" id="bd268141-6cb0-4192-9ad8-c316bd5c8b13" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EAP/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/EAP/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EAP/Timer.js" beforeDir="false" afterPath="$PROJECT_DIR$/EAP/Timer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EAP/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/EAP/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EAP/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/EAP/package.json" afterDir="false" />
     </list>
