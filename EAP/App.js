@@ -30,39 +30,27 @@ function RoundButton({ title, color, background, onPress, disabled }) {
     </TouchableOpacity>
   )
 }
-function Lap({ number, interval, fastest, slowest }) {
+function Lap({ curTime, number, interval}) {
   const lapStyle = [
     styles.lapText,
-    fastest && styles.fastest,
-    slowest && styles.slowest,
   ]
   return (
     <View style={styles.lap}>
-      <Text style={lapStyle}>Stamp {number}</Text>
+      <Text style={lapStyle}>.{number}</Text>
       <Timer style={[lapStyle, styles.lapTimer]} interval={interval}/>
     </View>
   )
 }
 
 function LapsTable({ laps, timer }) {
-  const finishedLaps = laps.slice(1)
-  let min = Number.MAX_SAFE_INTEGER
-  let max = Number.MIN_SAFE_INTEGER
-  if (finishedLaps.length >= 2) {
-    finishedLaps.forEach(lap => {
-      if (lap < min) min = lap
-      if (lap > max) max = lap
-    })
-  }
   return (
     <ScrollView style={styles.scrollView}>
       {laps.map((lap, index) => (
         <Lap
+          curTime={moment().format('HH:mm:ss'.toString())}
           number={laps.length - index}
           key={laps.length - index}
           interval={index === 0 ? timer + lap : lap}
-          fastest={lap === min}
-          slowest={lap === max}
         />
       ))}
     </ScrollView>
@@ -83,6 +71,7 @@ export default class App extends Component {
       laps: [ ],
     }
   }
+
   componentWillUnmount() {
     clearInterval(this.timer)
   }
@@ -105,9 +94,12 @@ export default class App extends Component {
     const [firstLap, ...other] = laps
     this.setState({
       laps: [0, firstLap + now - start, ...other],
-      start: timestamp,
+      start,
       now: timestamp,
     })
+    this.timer = setInterval(() => {
+      this.setState({ now: new Date().getTime()})
+    }, 100)
     Alert.alert('', 'Description:',[
       {text: 'Submit', onPress: () => console.log('New event entered.')}
     ])
@@ -117,11 +109,14 @@ export default class App extends Component {
     clearInterval(this.timer)
     const { laps, now, start } = this.state
     const [firstLap, ...other] = laps
+    console.log('line 111')
+    console.log(start)
     this.setState({
-      laps: [firstLap + now - start, ...other],
+      laps: [],
       start: 0,
       now: 0,
     })
+    console.log(start)
     Alert.alert('', 'Name Incident: ', [
       {text: 'Submit', onPress: () => console.log('New Incident entered.')}
     ])
@@ -146,6 +141,8 @@ export default class App extends Component {
   render() {
     const { now, start, laps } = this.state
     const timer = now - start
+    console.log('line 144')
+    console.log(start)
     return (
       <View style={styles.container}>
         <Timer
