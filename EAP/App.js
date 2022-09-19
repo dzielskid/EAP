@@ -1,71 +1,52 @@
-/*=============================================================================
- |   File Purpose:  Starts app as whole, Main Screen
- |
- |       Author:  
- |     Language:  JavaScript
- |                      NAME OF THE COMPILER USED TO COMPILE IT WHEN IT
- |                      WAS TESTED
- |   To Compile:  in terminal run 'npm start' command
- |
- +-----------------------------------------------------------------------------
- |
- |  Description:  DESCRIBE THE PROBLEM THAT WAS WRITTEN TO
- |      SOLVE.
- |
- |        Input:  NONE
- |
- |       Output:  DESCRIBE THE OUTPUT PRODUCED.
- |
- |    Algorithm:  
- |
- |   Required Features Not Included:
- |
- |   Known Bugs:  
- |
- *===========================================================================*/
+import React, { useState, Component } from 'react';
+import {StyleSheet, Text, View, TextInput } from 'react-native';
 
- 
-import * as React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+export default function App(){
+    const [name, OrganizationName] = useState('WVU medicial');
+    const [address, OrganizationAddress] = useState('1357 Domain st ');
+    const [city, City] = useState('West Virginia');
+    const [zip, ZipCode] = useState('26505');
+    const [Adminname, AdminName] = useState('Dale');
+    const [Adminemail, AdminEmail] = useState('ssno0@mix.wvu.edu');
 
-import Navigator from './routes/homeStack';
+    return(
+        <View style={styles.container}>
+            <Text>orgnization name:</Text>
+            <TextInput
+                multiline
+                style={styles.input}
+                placeholder='e.g. Bk'
+                onChangeText={(val)=>OrganizationName(val)} />
 
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
+                <Text> orgnization address:</Text>
+                <TextInput
+   
+  
+                style={styles.input}
+                placeholder='e.g. 1357'
+                onChangeText={(val)=>OrganizationAddress(val)} />   
 
-const Drawer = createDrawerNavigator();
+                <Text> name: {OrganizationName}, address:{OrganizationAddress}, city: {City}, zip:{ZipCode},Adminname: {AdminName}, Adminemail: {AdminEmail} </Text>
 
-export default function App() {
-  return (
-    <Navigator/>
-    /*
-    <NavigationContainer>
-      <Drawer.Navigator 
-        drawerType="front"
-        initialRouteName="Profile"
-        drawerContentOption={{
-          activeTintColor: '#e91e63',
-          itemStyle:{marginVertical: 10},
-        }}
-      >
-      </Drawer.Navigator>
-    </NavigationContainer>
-    */
-    /*
-    <View style={styles.container}>
-      <Text>One small step for man...</Text>
-      <StatusBar style="auto" />
-    </View>
-    */
-  );
+          
+        </View>
+    );
+
+    
 }
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container:{
+        flex:1,
+        backgroundColor:'#fff',
+        alignItems:'center',
+        justifyContent:'center',
+    },
+    input: {
+        borderWidth:1,
+        borderColor:'#777',
+        padding: 8,
+        margin: 10,
+        width: 150,
+
+    }
 });
