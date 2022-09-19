@@ -1,0 +1,20 @@
+{
+  "name": "eap",
+  "version": "1.0.0",
+  "description": "CSEE 480/481 - EAP App\r Mya Junkin, Katrina Cortopassi, Befikadu Kebede\r Dale Dzielski, Marty Dombrowski",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/befikaduzufan/EAP.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/befikaduzufan/EAP/issues"
+  },
+  "homepage": "https://github.com/befikaduzufan/EAP#readme",
+  "keywords": []
+}

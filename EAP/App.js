@@ -1,5 +1,5 @@
 /*=============================================================================
- |   File Purpose:  Starts app as whole, Main Screen
+ |   File Purpose:  Starts app as whole
  |
  |       Author:  
  |     Language:  JavaScript
@@ -18,54 +18,48 @@
  |
  |    Algorithm:  
  |
- |   Required Features Not Included:
+ |   Required Features Not Included:  Start on Main Screen
  |
  |   Known Bugs:  
  |
  *===========================================================================*/
 
- 
-import * as React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-
-import Navigator from './routes/homeStack';
-
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
-
-const Drawer = createDrawerNavigator();
+import React, { useState } from "react";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View, TextInput } from "react-native";
+// import { searchInstitutions } from "./Database_Functions";
+import { queryDatabase } from "././EAP_Backend/DB_Connection";
 
 export default function App() {
+  const [searchTerm, setTerm] = useState("");
+  //To use this ^^^ use {searchTerm}
+
+  // console.log("App Starting.."); (val) => setTerm(val)
   return (
-    <Navigator/>
-    /*
-    <NavigationContainer>
-      <Drawer.Navigator 
-        drawerType="front"
-        initialRouteName="Profile"
-        drawerContentOption={{
-          activeTintColor: '#e91e63',
-          itemStyle:{marginVertical: 10},
-        }}
-      >
-      </Drawer.Navigator>
-    </NavigationContainer>
-    */
-    /*
     <View style={styles.container}>
-      <Text>One small step for man...</Text>
+      <Text>One small step for man..</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Search Institutions..."
+        onChangeText={queryDatabase()} //Sets searchTerm to whatever is typed in search textbox at any moment
+        // onSubmitEditing={searchInstitutions(searchTerm)}
+      />
       <StatusBar style="auto" />
     </View>
-    */
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#777",
+    padding: 8,
+    margin: 10,
+    width: 200,
   },
 });
