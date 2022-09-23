@@ -3,10 +3,9 @@ import {
   StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert
   } from 'react-native'
 import moment from 'moment'
-import DialogInput from 'react-native-dialog-input'
 
 function Timer({ interval, style }) {
-  const pad = (n) => n < 10 ? '0' + n : n
+  const pad = (n) => n < 10 ? '0' + n : n //So that timer units have two digits
   const duration = moment.duration(interval)
   return (
     <View style={styles.timerContainer}>
@@ -17,7 +16,7 @@ function Timer({ interval, style }) {
   )
 }
 
-function RoundButton({ title, color, background, onPress, disabled }) {
+function TimerButton({ title, color, background, onPress, disabled }) {
   return (
     <TouchableOpacity
       onPress={() => !disabled && onPress()}
@@ -30,23 +29,23 @@ function RoundButton({ title, color, background, onPress, disabled }) {
     </TouchableOpacity>
   )
 }
-function Lap({ curTime, number, interval}) {
+function Stamp({ curTime, number, interval}) {
   const lapStyle = [
-    styles.lapText,
+    styles.stampText,
   ]
   return (
-    <View style={styles.lap}>
+    <View style={styles.stamp}>
       <Text style={lapStyle}>.{number}</Text>
-      <Timer style={[lapStyle, styles.lapTimer]} interval={interval}/>
+      <Timer style={[lapStyle, styles.stampTimer]} interval={interval}/>
     </View>
   )
 }
 
-function LapsTable({ laps, timer }) {
+function StampsTable({ laps, timer }) {
   return (
     <ScrollView style={styles.scrollView}>
       {laps.map((lap, index) => (
-        <Lap
+        <Stamp
           curTime={moment().format('HH:mm:ss'.toString())}
           number={laps.length - index}
           key={laps.length - index}
@@ -151,13 +150,13 @@ export default class App extends Component {
         />
         {laps.length === 0 && (
           <ButtonsRow>
-          <RoundButton
+          <TimerButton
               title='Start'
               color='#FFFFFF'
               background='#3ADB21'
               onPress={this.start}
             />
-            <RoundButton
+            <TimerButton
               title='Stamp'
               color='#FFFFFF'
               background='#151515'
@@ -167,13 +166,13 @@ export default class App extends Component {
         )}
         {start > 0 && (
           <ButtonsRow>
-            <RoundButton
+            <TimerButton
               title='Stop'
               color='#FFFFFF'
               background='#F10F0F'
               onPress={this.stop}
             />
-            <RoundButton
+            <TimerButton
               title='Stamp'
               color='#FFFFFF'
               background='#2159DB'
@@ -183,13 +182,13 @@ export default class App extends Component {
         )}
         {laps.length > 0 && start === 0 && (
           <ButtonsRow>
-            <RoundButton
+            <TimerButton
               title='Start'
               color='#FFFFFF'
               background='#3ADB21'
               onPress={this.resume}
             />
-            <RoundButton
+            <TimerButton
               title='Reset'
               color='#FFFFFF'
               background='#3D3D3D'
@@ -197,7 +196,7 @@ export default class App extends Component {
             />
           </ButtonsRow>
         )}
-        <LapsTable laps={laps} timer={timer}/>
+        <StampsTable laps={laps} timer={timer}/>
       </View>
     )
   }
@@ -213,7 +212,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flex:1,
-    backgroundColor: '#000000',
+    backgroundColor: '#FFFFFF',
     paddingTop: 130,
     algSelf: 'stretch',
   },
@@ -248,14 +247,14 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 30,
   },
-  lapText: {
+  stampText: {
     color: '#000000',
     fontSize: 18,
   },
-  lapTimer: {
+  stampTimer: {
     width: 30,
   },
-  lap: {
+  stamp: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderColor: '#151515',
@@ -264,12 +263,6 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     alignSelf: 'stretch',
-  },
-  fastest: {
-    color: '#000000',
-  },
-  slowest: {
-    color: '#000000',
   },
   timerContainer: {
     flexDirection: 'row',
