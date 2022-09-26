@@ -1,13 +1,17 @@
-// npm install tedious
-const { Connection, Request } = require("tedious");
-// import crypto from "crypto";
+/* 
+packages required: 
+  npm install tedious
+  npm i express nodemon cors
+  npm install express4-tedious --save
+*/
 
-// Create connection to database
+var Connection = require("tedious").Connection;
+
 const config = {
   authentication: {
     options: {
-      userName: "EAP_Admin",
-      password: "CSEE480&481",
+      userName: "",
+      password: "",
     },
     type: "default",
   },
@@ -21,46 +25,41 @@ const config = {
 const connection = new Connection(config);
 
 // Attempt to connect and execute queries if connection goes through
-connection.on("connect", (err) => {
+connection.on("connect", function (err) {
+  console.log("entered connection.on");
   if (err) {
     console.error(err.message);
   } else {
     console.log("connected");
-    queryDatabase("*");
   }
 });
 
-connection.connect();
+console.log("creating express api");
+var express = require("express");
+var tediousExpress = require("express4-tedious");
 
-// var Request = require("tedious").Request;
-var TYPES = require("tedious").TYPES;
+var app = express();
+app.use(function (req, res, next) {
+  req.sql = tediousExpress(connection);
+  next();
+});
 
-export function queryDatabase() {
-  request = new Request("SELECT * FROM [dbo].[Users];", function (err) {
-    if (err) {
-      console.log(err);
-    }
-  });
-  var result = "";
-  request.on("row", function (columns) {
-    columns.forEach(function (column) {
-      if (column.value === null) {
-        console.log("NULL");
-      } else {
-        result += column.value + " ";
-      }
-    });
-    console.log(result);
-    result = "";
-  });
+var router = express.Router();
 
-  request.on("done", function (rowCount, more) {
-    console.log(rowCount + " rows returned");
-  });
+router.get("/", function (req, res) {
+  req
+    .sql("SELECT * FROM [dbo].[USERS] for json path;") // queries bd
+    .into(res); // stores result from query into res
+  res.send({ result: "test" });
+  console.log(res);
+});
 
-  // Close the connection after the final event emitted by the request, after the callback passes
-  request.on("requestCompleted", function (rowCount, more) {
-    connection.close();
-  });
-  connection.execSql(request);
-}
+app.get("/test1", function (req, res) {
+  console.log("test1");
+  res.send({ result: "first load" });
+});
+
+app.get("/test2", function (req, res) {
+  console.log("test2");
+  res.send({ result: "on click" });
+});

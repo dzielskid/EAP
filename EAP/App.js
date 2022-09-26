@@ -26,23 +26,37 @@
 
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 // import { searchInstitutions } from "./Database_Functions";
-import { queryDatabase } from "././EAP_Backend/DB_Connection";
 
 export default function App() {
-  const [searchTerm, setTerm] = useState("");
-  //To use this ^^^ use {searchTerm}
+  // connect frontend to backend
+  const [returnedData, setReturnedData] = useState("");
+  const getData = async (url) => {
+    const newData = await fetch(url, {
+      method: "GET", // gets response from backend and makes it appear in frontend
+      headers: {
+        // describes how data is being sent and accepted
+        "content-type": "application/json",
+        Accept: "application/json",
+      },
+    }).then((res) => res.json());
+    console.log(newData);
+    setReturnedData(newData.result);
+  };
+  getData("/USERS");
 
-  // console.log("App Starting.."); (val) => setTerm(val)
+  const [searchTerm, setTerm] = useState(""); // for search bar
+
+  // console.log("App Starting..");
   return (
     <View style={styles.container}>
-      <Text>One small step for man..</Text>
+      <Button onPress={() => getData("/test2")} title="click" />
+      <Text>{returnedData}</Text>
       <TextInput
         style={styles.input}
         placeholder="Search Institutions..."
-        onChangeText={queryDatabase()} //Sets searchTerm to whatever is typed in search textbox at any moment
-        // onSubmitEditing={searchInstitutions(searchTerm)}
+        onChangeText={(val) => setTerm(val)} //Sets searchTerm to whatever is typed in search textbox at any moment
       />
       <StatusBar style="auto" />
     </View>
