@@ -4,7 +4,7 @@ import {
   } from 'react-native'
 import moment from 'moment'
 
-function Timer({ interval, style }) {
+function Timer({ interval, style }) {   //interval is timer time
   const pad = (n) => n < 10 ? '0' + n : n //So that timer units have two digits
   const duration = moment.duration(interval)
   return (
@@ -41,15 +41,14 @@ function Stamp({ curTime, number, interval}) {
   )
 }
 
-function StampsTable({ laps, timer }) {
+function StampsTable({ laps, timer, timerTime}) {
   return (
     <ScrollView style={styles.scrollView}>
       {laps.map((lap, index) => (
-        <Stamp
-          curTime={moment().format('HH:mm:ss'.toString())}
-          number={laps.length - index}
-          key={laps.length - index}
-          interval={index === 0 ? timer + lap : lap}
+          <Stamp    //TODO Save the current time of the timestamp along with the timer time (aka interval of moment duration)
+              number={laps.length - index}
+              key={laps.length - index}
+          interval={index === 0 ? timer + lap : lap}    //if first stamp, then timer+lap, otherwise lap
         />
       ))}
     </ScrollView>
@@ -93,12 +92,14 @@ export default class App extends Component {
     const [firstLap, ...other] = laps
     this.setState({
       laps: [0, firstLap + now - start, ...other],
-      start,
+      start: timestamp,
       now: timestamp,
     })
-    this.timer = setInterval(() => {
-      this.setState({ now: new Date().getTime()})
-    }, 100)
+
+   // this.timer = setInterval(() => {
+  //    this.setState({ now: new Date().getTime()})
+   // }, 100)
+
     Alert.alert('', 'Description:',[
       {text: 'Submit', onPress: () => console.log('New event entered.')}
     ])
@@ -115,7 +116,7 @@ export default class App extends Component {
       start: 0,
       now: 0,
     })
-    console.log(start)
+    console.log('start')
     Alert.alert('', 'Name Incident: ', [
       {text: 'Submit', onPress: () => console.log('New Incident entered.')}
     ])
@@ -140,8 +141,6 @@ export default class App extends Component {
   render() {
     const { now, start, laps } = this.state
     const timer = now - start
-    console.log('line 144')
-    console.log(start)
     return (
       <View style={styles.container}>
         <Timer
@@ -179,23 +178,7 @@ export default class App extends Component {
               onPress={this.lap}
             />
           </ButtonsRow>
-        )}
-        {laps.length > 0 && start === 0 && (
-          <ButtonsRow>
-            <TimerButton
-              title='Start'
-              color='#FFFFFF'
-              background='#3ADB21'
-              onPress={this.resume}
-            />
-            <TimerButton
-              title='Reset'
-              color='#FFFFFF'
-              background='#3D3D3D'
-              onPress={this.reset}
-            />
-          </ButtonsRow>
-        )}
+            )}
         <StampsTable laps={laps} timer={timer}/>
       </View>
     )
