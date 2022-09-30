@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\EAP"
+    "\\EAP",
+    "\\EAP\\components",
+    "\\EAP\\screens"
   ],
+  "SelectedNode": "\\EAP\\screens\\AccountScreen.js",
   "PreviewInSolutionExplorer": false
 }
