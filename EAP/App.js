@@ -2,8 +2,22 @@ import * as React from 'react';
 import { Button, TouchableOpacity, View, Text, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator, DrawerItemList, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { UniversityScreen } from './screens/UniversityScreen.js';
-
+import { LoginScreen } from './screens/LoginScreen.js';
+import { AccountScreen } from './screens/AccountScreen.js';
+import { CreateAdminScreen } from './screens/CreateAdminScreen.js';
+import { CreateEditorScreen } from './screens/CreateEditorScreen.js';
+import { CreateInstitutionScreen } from './screens/CreateInstitution.js';
+import { DeleteAdminScreen } from './screens/DeleteAdmin.js';
+import { DeleteEditorScreen } from './screens/DeleteEditor.js';
+import { DeleteInstitutionScreen } from './screens/DeleteInstitution.js';
+import { EAPDisplayScreen } from './screens/EAPDisplayScreen.js';
+import { IncidentReportsScreen } from './screens/IncidentReportsScreen.js';
+import { IncidentResponseDisplayScreen } from './screens/IncidentResponseDisplayScreen.js';
+import { InstitutionRequestsScreen } from './screens/InstitutionReuestsScreen.js';
+import { InstitutionVerificationScreen } from "./screens/InstitutionVerficationScreen.js";
+import { UploadEAPScreen } from "./screens/UploadEAPScreen.js";
 
 // Initial Screen on app opening
 function HomeScreen({ navigation }) {
@@ -11,43 +25,57 @@ function HomeScreen({ navigation }) {
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Text>Institutions Screen</Text>
             <Button
-                title="Institution Example"
-                onPress={() => navigation.navigate('University Screen')}
+                title="University Example"
+                onPress={() => navigation.navigate('Universities')}
+            />
+            <Button
+                title="temp Account Button"
+                onPress={() => navigation.navigate('Account')}
             />
         </View>
     );
 }
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const CustomDrawer = props => {
+    return (
+        <View style={{flex: 1}}>
+            <DrawerContentScrollView {...props}>
+                <Text style={{ textAlign: "center", paddingVertical: 20, fontSize: 20, backgroundColor: "grey", /**Change bgcolor to light grey*/}}>User Name</Text>
+                <Text style={{ textAlign: "center", paddingBottom: 20, backgroundColor: "grey", /**color: "grey"*/}}>User Level</Text>
+                <DrawerItemList {...props} />
+                <DrawerItem label="Logout" onPress={() => {
+                    //TODO Only enable if user is currently logged in, log out current user, toggle sidebar
+                    console.log("Logged out.")
+                }} />
+            </DrawerContentScrollView>
+        </View>
+    )
+}
 
 function App() {
     return (
-        <NavigationContainer>
+        <NavigationContainer drawerContent={props => <CustomDrawer {...props} />}>
             <Stack.Navigator initialRouteName="Home" /* Intial screen as app loads, see Home function above*/>
-                <Stack.Screen
-                    name="Institution Screen"
-                    component={HomeScreen}
-                    options={{
-                       //use for logo headerTitle: (props) => 
+                <Stack.Screen name="Institutions" component={HomeScreen} />
+                <Stack.Screen name="Account" component={AccountScreen}/>
+                <Stack.Screen name="Universities" component={UniversityScreen} />
+                <Stack.Screen name="Create Admin" component={CreateAdminScreen} />
+                <Stack.Screen name="Create Editor" component={CreateEditorScreen} />
+                <Stack.Screen name="Create Institution" component={CreateInstitutionScreen} />
+                <Stack.Screen name="Delete Admin" component={DeleteAdminScreen} />
+                <Stack.Screen name="Delete Editor" component={DeleteEditorScreen} />
+                <Stack.Screen name="Delete Institution" component={DeleteInstitutionScreen} />
+                <Stack.Screen name="EAP" component={EAPDisplayScreen} />
+                <Stack.Screen name="Incident Reports" component={IncidentReportsScreen} />
+                <Stack.Screen name="Incident Responses" component={IncidentResponseDisplayScreen} />
+                <Stack.Screen name="Institution Requests" component={InstitutionRequestsScreen}/>
+                <Stack.Screen name="Verify Institutions" component={InstitutionVerificationScreen} />
+                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="Upload EAP" component={UploadEAPScreen} />
 
-                        //header styling
-                        headerStyle: {
-                            backgroundColor: '#707070',
-                        },
-                        headerTintColor: '#FFFFFF', //header text color
-
-                        //Hamburger icon button to open sidebar options
-                        headerRight: () =>
-                            <TouchableOpacity
-                                title=''
-                                onPress={() => console.log('Header Button Pressed.')}
-                                color="#D4DFE4"
-                            >
-                                <Image source={require("./assets/splash.png")} />
-                            </TouchableOpacity>
-                    }}
-                />
-                <Stack.Screen name="University Screen" component={ UniversityScreen } />
             </Stack.Navigator>
         </NavigationContainer>
     );
