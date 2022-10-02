@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, TouchableOpacity, View, Text, Image } from 'react-native';
+import { Button, TouchableOpacity, View, Text, Image, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator, DrawerItemList, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
@@ -22,15 +22,27 @@ import { UploadEAPScreen } from "./screens/UploadEAPScreen.js";
 // Initial Screen on app opening
 function HomeScreen({ navigation }) {
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Institutions Screen</Text>
+        <View style={{ flex: 1, alignItems: 'center'}}
+            // Flow: sidebar links:(Login, Account, Logout),    University
+        >
             <Button
-                title="University Example"
-                onPress={() => navigation.navigate('Universities')}
+                title="Login"
+                onPress={() => navigation.navigate('Login')}
             />
             <Button
                 title="temp Account Button"
                 onPress={() => navigation.navigate('Account')}
+            />
+            <Button
+                title="Logout"
+                onPress={() => Alert.alert("User Logged Out")}
+            />
+            <Text style={{paddingVertical:50}}>Call 911 Button</Text>
+            <Text style={{ paddingVertical: 50 }}>Timer</Text>
+            <Text style={{ paddingVertical: 50 }}>Searchbar</Text>
+            <Button
+                title="University Example"
+                onPress={() => navigation.navigate('Universities')}
             />
         </View>
     );
@@ -70,7 +82,7 @@ function App() {
                 <Stack.Screen name="Delete Institution" component={DeleteInstitutionScreen} />
                 <Stack.Screen name="EAP" component={EAPDisplayScreen} />
                 <Stack.Screen name="Incident Reports" component={IncidentReportsScreen} />
-                <Stack.Screen name="Incident Responses" component={IncidentResponseDisplayScreen} />
+                <Stack.Screen name="Incident Report" component={IncidentResponseDisplayScreen} />
                 <Stack.Screen name="Institution Requests" component={InstitutionRequestsScreen}/>
                 <Stack.Screen name="Verify Institutions" component={InstitutionVerificationScreen} />
                 <Stack.Screen name="Login" component={LoginScreen} />
