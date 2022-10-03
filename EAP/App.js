@@ -25,11 +25,12 @@
  *===========================================================================*/
 
  
-import * as React from 'react';
-import { Button, TouchableOpacity, View, Text, Image, Alert } from 'react-native';
+import { useState} from 'react';
+import { Button, TouchableOpacity, View, Text, Image, Alert, ScrollView, TextInput, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator, DrawerItemList, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+
 import { UniversityScreen } from './screens/UniversityScreen.js';
 import { LoginScreen } from './screens/LoginScreen.js';
 import { AccountScreen } from './screens/AccountScreen.js';
@@ -45,30 +46,12 @@ import { IncidentResponseDisplayScreen } from './screens/IncidentResponseDisplay
 import { InstitutionRequestsScreen } from './screens/InstitutionReuestsScreen.js';
 import { InstitutionVerificationScreen } from "./screens/InstitutionVerficationScreen.js";
 import { UploadEAPScreen } from "./screens/UploadEAPScreen.js";
+
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import moment from 'moment';
-import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 // import { searchInstitutions } from "./Database_Functions";
 
-export default function App() {
-  // connect frontend to backend
-  const [returnedData, setReturnedData] = useState("");
-  const getData = async (url) => {
-    const newData = await fetch(url, {
-      method: "GET", // gets response from backend and makes it appear in frontend
-      headers: {
-        // describes how data is being sent and accepted
-        "content-type": "application/json",
-        Accept: "application/json",
-      },
-    }).then((res) => res.json());
-    console.log(newData);
-    setReturnedData(newData.result);
-  };
-  getData("/USERS");
+
 
 // Initial Screen on app opening
 function HomeScreen({ navigation }) {
@@ -98,7 +81,7 @@ function HomeScreen({ navigation }) {
         </View>
     );
 }
-  const [searchTerm, setTerm] = useState(""); // for search bar
+//const [searchTerm, setTerm] = useState(""); // for search bar
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -143,23 +126,23 @@ function App() {
             </Stack.Navigator>
         </NavigationContainer>
     );
-
-    /**
-  // console.log("App Starting..");
-  return (
-    <View style={styles.container}>
-      <Button onPress={() => getData("/test2")} title="click" />
-      <Text>{returnedData}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Search Institutions..."
-        onChangeText={(val) => setTerm(val)} //Sets searchTerm to whatever is typed in search textbox at any moment
-      />
-      <StatusBar style="auto" />
-    </View>
-    );
-    */
+    {/**
+        // console.log("App Starting..");
+        return (
+            <View style={styles.container}>
+                <Button onPress={() => getData("/test2")} title="click" />
+                <Text>{returnedData}</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Search Institutions..."
+                    onChangeText={(val) => setTerm(val)} //Sets searchTerm to whatever is typed in search textbox at any moment
+                />
+                <StatusBar style="auto" />
+            </View>
+        );
+    */}
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
