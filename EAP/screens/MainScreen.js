@@ -26,3 +26,21 @@
  |      SITUATIONS, DESCRIBE THE SITUATIONS AND PROBLEMS HERE.
  |
  *===========================================================================*/
+
+ import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
+ import {StyleSheet, View, Text} from 'react-native';
+import { clickProps } from 'react-native-web/dist/cjs/modules/forwardedProps';
+
+ export default function MainScreen({navigation}) {
+     
+    const pressHandler = () => {
+        NavigationContainer.navigate('University')
+    }
+     return (
+         <View>
+             <Text>Home Screen</Text>
+             <Button title='University' onPress={pressHandler}/>
+         </View>
+     )
+ }

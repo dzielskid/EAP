@@ -1,5 +1,5 @@
 /*=============================================================================
- |   File Purpose:  Starts app as whole
+ |   File Purpose:  Starts app as whole, Main Screen
  |
  |       Author:  
  |     Language:  JavaScript
@@ -18,13 +18,14 @@
  |
  |    Algorithm:  
  |
- |   Required Features Not Included:  Start on Main Screen
+ |   Required Features Not Included:
  |
  |   Known Bugs:  
  |
  *===========================================================================*/
 
-import React, {useState, Component } from 'react';
+ 
+import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import moment from 'moment';
@@ -176,55 +177,36 @@ export default class App extends Component {
         }, 1000)
     }
 
-  render(){
-    const { now, start, stamps } = this.state
-    const timer = now - start
-    return (
-      <View style={styles.container}>
-        <Timer interval={timer} style={styles.timer} />
-            {stamps.length === 0 && (
-                <ButtonsRow>
-                    <TimerButton
-                        title='Start'
-                        color='#FFFFFF'
-                        background='#3ADB21'
-                        onPress={this.start}
-                    />
-                    <TimerButton
-                        title='Stamp'
-                        color='#FFFFFF'
-                        background='#2159DB'
-                        disabled
-                    />
-                </ButtonsRow>
-            )}
-            {start > 0 && (
-                <ButtonsRow>
-                    <TimerButton
-                        title='Stop'
-                        color='#FFFFFF'
-                        background='#ff0000'
-                        onPress={this.stop}
-                    />
-                    <TimerButton
-                        title='Stamp'
-                        color='#FFFFFF'
-                        background='#2159DB'
-                        onPress={this.stamp}
-                    />
-                </ButtonsRow>
-            )}
-            
-        <StampsTable stamps={stamps}/>
-        <TextInput
-           style={styles.input}
-           placeholder='Search Institutions...'
-           onChangeText={(val) => setName(val)}  //Sets searchTerm to whatever is typed in search textbox at any moment
-        />
-        <StatusBar style="auto" />
-        </View>
-    );
-  }
+import Navigator from './routes/homeStack';
+
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {NavigationContainer} from '@react-navigation/native';
+
+const Drawer = createDrawerNavigator();
+
+export default function App() {
+  return (
+    <Navigator/>
+    /*
+    <NavigationContainer>
+      <Drawer.Navigator 
+        drawerType="front"
+        initialRouteName="Profile"
+        drawerContentOption={{
+          activeTintColor: '#e91e63',
+          itemStyle:{marginVertical: 10},
+        }}
+      >
+      </Drawer.Navigator>
+    </NavigationContainer>
+    */
+    /*
+    <View style={styles.container}>
+      <Text>One small step for man...</Text>
+      <StatusBar style="auto" />
+    </View>
+    */
+  );
 }
 
 const styles = StyleSheet.create({
