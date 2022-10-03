@@ -1,3 +1,30 @@
+/*=============================================================================
+ |   File Purpose:  Starts app as whole, Main Screen
+ |
+ |       Author:  
+ |     Language:  JavaScript
+ |                      NAME OF THE COMPILER USED TO COMPILE IT WHEN IT
+ |                      WAS TESTED
+ |   To Compile:  in terminal run 'npm start' command
+ |
+ +-----------------------------------------------------------------------------
+ |
+ |  Description:  DESCRIBE THE PROBLEM THAT WAS WRITTEN TO
+ |      SOLVE.
+ |
+ |        Input:  NONE
+ |
+ |       Output:  DESCRIBE THE OUTPUT PRODUCED.
+ |
+ |    Algorithm:  
+ |
+ |   Required Features Not Included:
+ |
+ |   Known Bugs:  
+ |
+ *===========================================================================*/
+
+ 
 import * as React from 'react';
 import { Button, TouchableOpacity, View, Text, Image, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -18,6 +45,9 @@ import { IncidentResponseDisplayScreen } from './screens/IncidentResponseDisplay
 import { InstitutionRequestsScreen } from './screens/InstitutionReuestsScreen.js';
 import { InstitutionVerificationScreen } from "./screens/InstitutionVerficationScreen.js";
 import { UploadEAPScreen } from "./screens/UploadEAPScreen.js";
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import moment from 'moment';
 
 // Initial Screen on app opening
 function HomeScreen({ navigation }) {
