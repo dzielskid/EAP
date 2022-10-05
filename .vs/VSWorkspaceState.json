@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\EAP",
-    "\\EAP\\screens"
+    "\\EAP\\screens",
+    "\\EAP_Backend"
   ],
-  "SelectedNode": "\\EAP\\screens\\CreateEditorScreen.js",
+  "SelectedNode": "\\EAP\\screens\\CreateInstitution.js",
   "PreviewInSolutionExplorer": false
 }
