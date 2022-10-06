@@ -12,17 +12,14 @@ app.use(express.json()); // this and urlencoded allows for passing json from fro
 app.use(express.urlencoded());
 app.use(cors()); // allows for connection b/w front end and back end
 
-app.post("/api", function (req, res) {
+app.post("/api", async (req, res) => {
   console.log("entered api");
-  res.send({ result: "Hello" }); // sends an object
+  const result = await dbFunction.searchInstitutions(req.body.name);
+  res.send(result.redcordset); // sends an object
 });
 
-app.post("/quit", function (req, res) {
-  console.log("entered quit");
-  res.send({ result: "Goodbye" });
-});
 
-dbFunction.searchInstitutions("*").then((res) => {
+dbFunction.searchInstitutions("WEST").then((res) => {
   console.log(res.recordset); // .recordset gives array of objects
 });
 

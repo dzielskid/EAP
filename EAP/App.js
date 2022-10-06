@@ -30,34 +30,37 @@ import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 // import { searchInstitutions } from "./Database_Functions";
 
 export default function App() {
+  const [searchTerm, setTerm] = useState(""); // for search bar
+
   // connect frontend to backend
   const [returnedData, setReturnedData] = useState("");
-  const getData = async (url) => {
-    const newData = await fetch(url, {
-      method: "GET", // gets response from backend and makes it appear in frontend
+  const getInstitutions = async () => {
+    const newData = await fetch("/api", {
+      method: "POST", // gets response from backend and makes it appear in frontend
       headers: {
         // describes how data is being sent and accepted
         "content-type": "application/json",
         Accept: "application/json",
       },
+      body: JSON.stringify({
+        name: searchTerm,
+      }),
     }).then((res) => res.json());
+    console.log("entered getInstitutions");
     console.log(newData);
-    setReturnedData(newData.result);
+    setReturnedData(newData[0]);
   };
-  getData("/USERS");
-
-  const [searchTerm, setTerm] = useState(""); // for search bar
-
   // console.log("App Starting..");
   return (
     <View style={styles.container}>
-      <Button onPress={() => getData("/test2")} title="click" />
       <Text>{returnedData}</Text>
+      <Text>{searchTerm}</Text>
       <TextInput
         style={styles.input}
         placeholder="Search Institutions..."
         onChangeText={(val) => setTerm(val)} //Sets searchTerm to whatever is typed in search textbox at any moment
       />
+      <Button onPress={() => getInstitutions()} title="click" />
       <StatusBar style="auto" />
     </View>
   );

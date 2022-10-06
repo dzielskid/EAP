@@ -9,9 +9,13 @@ const sql = require("mssql");
 const searchInstitutions = async (searchTerm) => {
   try {
     let pool = await sql.connect(config);
-    let institutions = pool
+    let institutions = await pool
       .request()
-      .query("select" + searchTerm + "from [dbo].[INSTITUTIONS];");
+      .query(
+        "SELECT * FROM [dbo].[INSTITUTIONS] WHERE Institution_Name LIKE '%" +
+          searchTerm +
+          "%' order by Institution_Name asc;"
+      );
     return institutions;
   } catch (error) {
     console.log(error);
