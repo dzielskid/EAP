@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput,button,Pressable } from 'react-native';
 
 export default function App(props) {
-  const [Editor, setEditorName] = useState('');
-  const [Editoremail, setEditorEmail] = useState('13555 Peabody st');
-  const [Organization, setOrganizationName]=useState('Morgantown');
+  const [AdminName, setAdminName] = useState('');
+  const [Adminemail, setAdminEmail] = useState('');
+  const [OrganizationName, setOrganizationName]=useState('');
   
   const {onPress,title = 'Invite'}=props;
 
@@ -12,17 +12,17 @@ export default function App(props) {
   return (
     <View style={styles.container}>
 
-      <Text>Editor Name:</Text>
+      <Text>Admin Name:</Text>
       <TextInput 
         placeholder='' 
         style={styles.input}
-        onChangeText={(value) => setEditorName(value)} />
+        onChangeText={(value) => setAdminName(value)} />
 
-      <Text>Editor Email:</Text>
+      <Text>Admin Email:</Text>
       <TextInput 
         placeholder='' 
         style={styles.input}
-        onChangeText={(value) => setEditorEmail(value)} />
+        onChangeText={(value) => setAdminEmail(value)} />
 
 <Text>Organization Name:</Text>
       <TextInput 
@@ -35,7 +35,7 @@ export default function App(props) {
   <Text style={styles.text}>{title}</Text>
 </Pressable>
 
-      <Text style={styles.result}>name: {EditorName}, Email: {Editoremail}, Organization: {OrganizationName}</Text>
+      <Text style={styles.result}>{AdminName} {Adminemail} {OrganizationName}</Text>
       
     </View>
   );
