@@ -51,7 +51,37 @@ import { StatusBar } from 'expo-status-bar';
 import moment from 'moment';
 // import { searchInstitutions } from "./Database_Functions";
 
+function HomeStack({ navigation }) {
+    return (
+        <Stack.Navigator initialRouteName="Home" /* Intial screen as app loads, see Home function above*/>
+            <Stack.Screen name="Institutions" component={HomeScreen} />
+            <Stack.Screen name="Universities" component={UniversityScreen} />
+            <Stack.Screen name="EAP" component={EAPDisplayScreen} />
+            <Stack.Screen name="Incident Reports" component={IncidentReportsScreen} />
+            <Stack.Screen name="Incident Report" component={IncidentResponseDisplayScreen} />
+            <Stack.Screen name="Upload EAP" component={UploadEAPScreen} />
 
+        </Stack.Navigator>
+        )
+}
+
+
+function AccountStack({ navigation }) {
+    return (
+        <Stack.Navigator initialRouteName="Home" /* Intial screen as app loads, see Home function above*/>
+            <Stack.Screen name="Account" component={AccountScreen} />
+            <Stack.Screen name="Create Admin" component={CreateAdminScreen} />
+            <Stack.Screen name="Create Editor" component={CreateEditorScreen} />
+            <Stack.Screen name="Create Institution" component={CreateInstitutionScreen} />
+            <Stack.Screen name="Delete Admin" component={DeleteAdminScreen} />
+            <Stack.Screen name="Delete Editor" component={DeleteEditorScreen} />
+            <Stack.Screen name="Delete Institution" component={DeleteInstitutionScreen} />
+            <Stack.Screen name="Institution Requests" component={InstitutionRequestsScreen} />
+            <Stack.Screen name="Verify Institutions" component={InstitutionVerificationScreen} />
+
+        </Stack.Navigator>
+    )
+}
 
 // Initial Screen on app opening
 function HomeScreen({ navigation }) {
@@ -59,18 +89,6 @@ function HomeScreen({ navigation }) {
         <View style={{ flex: 1, alignItems: 'center'}}
             // Flow: sidebar links:(Login, Account, Logout),    University
         >
-            <Button
-                title="Login"
-                onPress={() => navigation.navigate('Login')}
-            />
-            <Button
-                title="temp Account Button"
-                onPress={() => navigation.navigate('Account')}
-            />
-            <Button
-                title="Logout"
-                onPress={() => Alert.alert("User Logged Out")}
-            />
             <Text style={{paddingVertical:50}}>Call 911 Button</Text>
             <Text style={{ paddingVertical: 50 }}>Timer</Text>
             <Text style={{ paddingVertical: 50 }}>Searchbar</Text>
@@ -104,26 +122,12 @@ const CustomDrawer = props => {
 
 function App() {
     return (
-        <NavigationContainer drawerContent={props => <CustomDrawer {...props} />}>
-            <Stack.Navigator initialRouteName="Home" /* Intial screen as app loads, see Home function above*/>
-                <Stack.Screen name="Institutions" component={HomeScreen} />
-                <Stack.Screen name="Account" component={AccountScreen}/>
-                <Stack.Screen name="Universities" component={UniversityScreen} />
-                <Stack.Screen name="Create Admin" component={CreateAdminScreen} />
-                <Stack.Screen name="Create Editor" component={CreateEditorScreen} />
-                <Stack.Screen name="Create Institution" component={CreateInstitutionScreen} />
-                <Stack.Screen name="Delete Admin" component={DeleteAdminScreen} />
-                <Stack.Screen name="Delete Editor" component={DeleteEditorScreen} />
-                <Stack.Screen name="Delete Institution" component={DeleteInstitutionScreen} />
-                <Stack.Screen name="EAP" component={EAPDisplayScreen} />
-                <Stack.Screen name="Incident Reports" component={IncidentReportsScreen} />
-                <Stack.Screen name="Incident Report" component={IncidentResponseDisplayScreen} />
-                <Stack.Screen name="Institution Requests" component={InstitutionRequestsScreen}/>
-                <Stack.Screen name="Verify Institutions" component={InstitutionVerificationScreen} />
-                <Stack.Screen name="Login" component={LoginScreen} />
-                <Stack.Screen name="Upload EAP" component={UploadEAPScreen} />
-
-            </Stack.Navigator>
+        <NavigationContainer>
+            <Drawer.Navigator initialRouteName="Home" drawerContent={props => <CustomDrawer {...props} />}>
+                <Drawer.Screen name="Institutions" component={HomeStack} />
+                <Drawer.Screen name="Login" component={LoginScreen} />
+                <Drawer.Screen name="Account" component={AccountStack} />
+            </Drawer.Navigator>
         </NavigationContainer>
     );
     {/**
