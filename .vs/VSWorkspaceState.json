@@ -2,9 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\EAP",
-    "\\EAP\\screens",
+    "\\EAP\\components",
     "\\EAP_Backend"
   ],
-  "SelectedNode": "\\EAP\\screens\\AccountScreen.js",
+  "SelectedNode": "\\EAP\\components\\TimerList.js",
   "PreviewInSolutionExplorer": false
 }

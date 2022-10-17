@@ -6,18 +6,6 @@ function UniversityScreen({ navigation}) {
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
         //Flow sidebar: Login, Account, Logout      link to Add EAP, Incident Response Reports, EAP Display
         >
-            <Button
-                title="Login"
-                onPress={() => navigation.navigate('Login')}
-            />
-            <Button
-                title="Account Button"
-                onPress={() => navigation.navigate('Account')}
-            />
-            <Button
-                title="Logout"
-                onPress={() => Alert.alert("User Logged Out")}
-            />
             <Text style={{ paddingVertical: 50 }}>Call 911 Button</Text>
             <Text style={{ paddingVertical: 50 }}>Timer</Text>
             <Text style={{ paddingVertical: 50 }}>Searchbar</Text>
@@ -31,7 +19,7 @@ function UniversityScreen({ navigation}) {
             />
             <Button
                 title="Facility Example"
-                onPress={() => navigation.navigate('EAP ')}
+                onPress={() => navigation.navigate('EAP')}
             />
         </View>
     );

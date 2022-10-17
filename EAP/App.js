@@ -47,8 +47,7 @@ import { InstitutionRequestsScreen } from './screens/InstitutionReuestsScreen.js
 import { InstitutionVerificationScreen } from "./screens/InstitutionVerficationScreen.js";
 import { UploadEAPScreen } from "./screens/UploadEAPScreen.js";
 
-import { StatusBar } from 'expo-status-bar';
-import moment from 'moment';
+import TimerContainer from "./components/Timer.js"
 // import { searchInstitutions } from "./Database_Functions";
 
 function HomeStack({ navigation }) {
@@ -90,7 +89,7 @@ function HomeScreen({ navigation }) {
             // Flow: sidebar links:(Login, Account, Logout),    University
         >
             <Text style={{paddingVertical:50}}>Call 911 Button</Text>
-            <Text style={{ paddingVertical: 50 }}>Timer</Text>
+            <TimerContainer />
             <Text style={{ paddingVertical: 50 }}>Searchbar</Text>
             <Button
                 title="University Example"
