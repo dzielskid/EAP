@@ -7,7 +7,7 @@ function UniversityScreen({ navigation}) {
         //Flow sidebar: Login, Account, Logout      link to Add EAP, Incident Response Reports, EAP Display
         >
             <Text style={{ paddingVertical: 50 }}>Call 911 Button</Text>
-            <Text style={{ paddingVertical: 50 }}>Timer</Text>
+            <TimerContainer />
             <Text style={{ paddingVertical: 50 }}>Searchbar</Text>
             <Button
                 title="Add EAP"

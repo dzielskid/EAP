@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import ListComponent from "./TimerList.js";
+import DialogInput from "react-native-dialog-input"
 
-let padToTwo = (number) => (number <= 9 ? `0${number}` : number);
+let padToTwo = (number) => (number <= 9 ? `0${number}` : number)
+
+
+
 
 class TimerContainer extends Component {
 
@@ -89,9 +93,24 @@ class TimerContainer extends Component {
                 </View>
 
                 <View style={styles.buttonParent}>
-                    <TouchableOpacity style={styles.button} onPress={this.handleReset}><Text style={styles.buttonText}>Reset</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={this.handleToggle}><Text style={styles.buttonText}>{!this.state.start ? 'Start' : 'Stop'}</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => this.handleLap(this.state.min, this.state.sec, this.state.msec)} disabled={!this.state.start}><Text style={styles.buttonText}>Lap</Text></TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={!this.state.start ? this.handleToggle : this.handleReset}
+                    >
+                        <Text style={styles.buttonText}>{!this.state.start ? 'Start' : 'Stop'}</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.button}
+                        disabled={!this.state.start}
+                        onPress={() => {
+                            this.handleLap(this.state.min, this.state.sec, this.state.msec)
+                        }}
+                    >
+                        <Text style={styles.buttonText}>Stamp</Text>
+                    </TouchableOpacity>
+
                 </View>
 
                 <ListComponent lap={this.lapArr} />
