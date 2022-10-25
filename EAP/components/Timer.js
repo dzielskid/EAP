@@ -20,11 +20,20 @@ class TimerContainer extends Component {
             sec: 0
         }
 
+        this.isDialogVisible = false;
+
         this.lapArr = [];
 
         this.interval = null;
     };
 
+    showDialog(isShow) {
+        this.isDialogVisible = isShow
+    }
+
+    sendInput(inputText) {
+        console.log("Dialog box input: " + inputText)
+    }
 
     handleToggle = () => {
         this.setState(
@@ -35,10 +44,10 @@ class TimerContainer extends Component {
         );
     };
 
-    handleLap = (hr, min, sec, curTime) => {
+    handleLap = (hr, min, sec, curTime, inputText) => {
         this.lapArr = [
             ...this.lapArr,
-            { hr, min, sec, curTime }
+            { hr, min, sec, curTime, inputText }
         ]
 
     };
@@ -107,11 +116,20 @@ class TimerContainer extends Component {
                         style={styles.button}
                         disabled={!this.state.start}
                         onPress={() => {
-                            this.handleLap(this.state.hr, this.state.min, this.state.sec, moment().format("HH:mm:ss"))
+                            this.showDialog(true)
                         }}
                     >
                         <Text style={styles.buttonText}>Stamp</Text>
                     </TouchableOpacity>
+
+                    <DialogInput
+                        isDialogVisible={this.isDialogVisible}
+                        title={"Dialog Example"}
+                        message={"Message for Dialog"}
+                        hintInput={"HINT INPUT"}
+                        submitInput={(inputText) => { this.handleLap(this.state.hr, this.state.min, this.state.sec, moment().format("HH:mm:ss"), inputText); this.showDialog(false)}}
+                        closeDialog={() => { this.showDialog(false) }}>
+                    </DialogInput>
 
                 </View>
 

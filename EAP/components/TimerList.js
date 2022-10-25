@@ -9,7 +9,7 @@ class ListComponent extends Component {
             <ScrollView style={styles.scroll}>
                 <FlatList
                     data={this.props.lap}
-                    renderItem={({ item, index }) => <Text key={index} style={styles.item}>{item.curTime}  ({padToTwo(item.hr)}:{padToTwo(item.min)}:{padToTwo(item.sec)}) - Sample Text</Text>}
+                    renderItem={({ item, index }) => <Text key={index} style={styles.item}>{item.curTime}  ({padToTwo(item.hr)}:{padToTwo(item.min)}:{padToTwo(item.sec)}) - {item.inputText}</Text>}
                 />
             </ScrollView>
         );
