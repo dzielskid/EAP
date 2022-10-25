@@ -9,7 +9,7 @@ class ListComponent extends Component {
             <ScrollView style={styles.scroll}>
                 <FlatList
                     data={this.props.lap}
-                    renderItem={({item, index}) => <Text key={index} style={styles.item}>{`#${index+1}            `}{padToTwo(item.min)}:{padToTwo(item.sec)}:{padToTwo(item.msec)}</Text>}
+                    renderItem={({ item, index }) => <Text key={index} style={styles.item}>{item.curTime}  ({padToTwo(item.hr)}:{padToTwo(item.min)}:{padToTwo(item.sec)}) - Sample Text</Text>}
                 />
             </ScrollView>
         );
@@ -18,7 +18,7 @@ class ListComponent extends Component {
 
 const styles = StyleSheet.create({
     scroll: {
-        maxHeight: "10%",
+        maxHeight: "30%",
         backgroundColor: "#FFFFFF",
     },
 

@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, UseState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import ListComponent from "./TimerList.js";
-import DialogInput from "react-native-dialog-input"
+import DialogInput from "react-native-dialog-input";
+
+import moment from "moment";
 
 let padToTwo = (number) => (number <= 9 ? `0${number}` : number)
-
 
 
 
@@ -14,15 +15,16 @@ class TimerContainer extends Component {
         super(props);
 
         this.state = {
+            hr: 0,
             min: 0,
-            sec: 0,
-            msec: 0
+            sec: 0
         }
 
         this.lapArr = [];
 
         this.interval = null;
-    }
+    };
+
 
     handleToggle = () => {
         this.setState(
@@ -33,10 +35,10 @@ class TimerContainer extends Component {
         );
     };
 
-    handleLap = (min, sec, msec) => {
+    handleLap = (hr, min, sec, curTime) => {
         this.lapArr = [
             ...this.lapArr,
-            { min, sec, msec }
+            { hr, min, sec, curTime }
         ]
 
     };
@@ -44,20 +46,20 @@ class TimerContainer extends Component {
     handleStart = () => {
         if (this.state.start) {
             this.interval = setInterval(() => {
-                if (this.state.msec !== 99) {
+                if (this.state.sec !== 59) {
                     this.setState({
-                        msec: this.state.msec + 1
+                        sec: this.state.sec + 1
                     });
-                } else if (this.state.sec !== 59) {
+                } else if (this.state.min !== 59) {
                     this.setState({
-                        msec: 0,
-                        sec: ++this.state.sec
+                        sec: 0,
+                        min: ++this.state.min
                     });
                 } else {
                     this.setState({
-                        msec: 0,
                         sec: 0,
-                        min: ++this.state.min
+                        min: 0,
+                        hr: ++this.state.hr
                     });
                 }
             }, 1000);
@@ -69,9 +71,9 @@ class TimerContainer extends Component {
 
     handleReset = () => {
         this.setState({
+            hr: 0,
             min: 0,
             sec: 0,
-            msec: 0,
 
             start: false
         });
@@ -87,9 +89,9 @@ class TimerContainer extends Component {
             <View style={styles.container}>
 
                 <View style={styles.parent}>
-                    <Text style={styles.child}>{'  ' + padToTwo(this.state.min) + ' : '}</Text>
-                    <Text style={styles.child}>{padToTwo(this.state.sec) + ' : '}</Text>
-                    <Text style={styles.child}>{padToTwo(this.state.msec)}</Text>
+                    <Text style={styles.child}>{'  ' + padToTwo(this.state.hr) + ' : '}</Text>
+                    <Text style={styles.child}>{padToTwo(this.state.min) + ' : '}</Text>
+                    <Text style={styles.child}>{padToTwo(this.state.sec)}</Text>
                 </View>
 
                 <View style={styles.buttonParent}>
@@ -105,7 +107,7 @@ class TimerContainer extends Component {
                         style={styles.button}
                         disabled={!this.state.start}
                         onPress={() => {
-                            this.handleLap(this.state.min, this.state.sec, this.state.msec)
+                            this.handleLap(this.state.hr, this.state.min, this.state.sec, moment().format("HH:mm:ss"))
                         }}
                     >
                         <Text style={styles.buttonText}>Stamp</Text>
@@ -113,7 +115,7 @@ class TimerContainer extends Component {
 
                 </View>
 
-                <ListComponent lap={this.lapArr} />
+                <ListComponent lap={ this.lapArr } timelap={ this.timeArr }/>
 
             </View>
         );
@@ -144,7 +146,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-around",
         marginTop: "5%",
-        marginBottom: "16%"
+        marginBottom: "5%"
     },
 
     button: {
