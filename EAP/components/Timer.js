@@ -20,20 +20,24 @@ class TimerContainer extends Component {
             sec: 0
         }
 
-        this.isDialogVisible = false;
+        this.eventName = ""
+
+        this.isActionDialogVisible = false;
+        this.isEndDialogVisible = false;
 
         this.lapArr = [];
 
         this.interval = null;
     };
 
-    showDialog(isShow) {
-        this.isDialogVisible = isShow
+    showActionDialog(isShow) {
+        this.isActionDialogVisible = isShow
     }
 
-    sendInput(inputText) {
-        console.log("Dialog box input: " + inputText)
+    showEndDialog(isShow) {
+        this.isEndDialogVisible = isShow
     }
+
 
     handleToggle = () => {
         this.setState(
@@ -90,6 +94,7 @@ class TimerContainer extends Component {
         clearInterval(this.interval);
 
         this.lapArr = [];
+        this.eventName = ""
     };
 
 
@@ -116,19 +121,26 @@ class TimerContainer extends Component {
                         style={styles.button}
                         disabled={!this.state.start}
                         onPress={() => {
-                            this.showDialog(true)
+                            this.showActionDialog(true)
                         }}
                     >
                         <Text style={styles.buttonText}>Stamp</Text>
                     </TouchableOpacity>
 
                     <DialogInput
-                        isDialogVisible={this.isDialogVisible}
-                        title={"Dialog Example"}
-                        message={"Message for Dialog"}
-                        hintInput={"HINT INPUT"}
-                        submitInput={(inputText) => { this.handleLap(this.state.hr, this.state.min, this.state.sec, moment().format("HH:mm:ss"), inputText); this.showDialog(false)}}
-                        closeDialog={() => { this.showDialog(false) }}>
+                        isDialogVisible={this.isActionDialogVisible}
+                        title={"Description"}
+                        hintInput={"ENTER TEXT"}
+                        submitInput={(inputText) => { this.handleLap(this.state.hr, this.state.min, this.state.sec, moment().format("HH:mm:ss"), inputText); this.showActionDialog(false)}}
+                        closeDialog={() => { this.showActionDialog(false) }}>
+                    </DialogInput>
+
+                    <DialogInput
+                        isDialogVisible={this.isEndDialogVisible}
+                        title={"Name Incident"}
+                        hintInput={"ENTER TEXT"}
+                        submitInput={(inputText) => { this.handleReset; this.showEndDialog(false) }}
+                        closeDialog={() => { this.showEndDialog(false) }}>
                     </DialogInput>
 
                 </View>

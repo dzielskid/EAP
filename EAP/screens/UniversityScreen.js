@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { View, Text, Button, Alert } from 'react-native';
+import TimerContainer from "../components/Timer.js"
 
 function UniversityScreen({ navigation}) {
     return (
