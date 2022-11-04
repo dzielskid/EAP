@@ -16,5 +16,8 @@
     "url": "https://github.com/befikaduzufan/EAP/issues"
   },
   "homepage": "https://github.com/befikaduzufan/EAP#readme",
-  "keywords": []
+  "keywords": [],
+  "dependencies": {
+    "react-native-phone-call": "^1.2.0"
+  }
 }
