@@ -25,6 +25,7 @@
     "react-native-dialog-input": "^1.0.8",
     "react-native-gesture-handler": "~2.2.1",
     "react-native-mssql": "^0.1.4",
+    "react-native-phone-call": "^1.2.0",
     "react-native-reanimated": "~2.8.0",
     "react-native-safe-area-context": "4.2.4",
     "react-native-screens": "~3.11.1",
