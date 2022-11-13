@@ -9,7 +9,6 @@ function UniversityScreen({ navigation}) {
         >
             <Text style={{ paddingVertical: 50 }}>Call 911 Button</Text>
             <TimerContainer />
-            <Text style={{ paddingVertical: 50 }}>Searchbar</Text>
             <Button
                 title="Add EAP"
                 onPress={() => navigation.navigate('Upload EAP')}
