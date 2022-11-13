@@ -1,4 +1,4 @@
-import React, { Component, UseState } from 'react';
+import React, { Component} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import call from 'react-native-phone-call'
 
@@ -9,8 +9,6 @@ const args = {
   
   
 }
-
-// call(args).catch(console.error)
 
 class CallContainer extends Component {
     render() {

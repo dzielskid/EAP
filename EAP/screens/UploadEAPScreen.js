@@ -11,6 +11,8 @@ import {
     TouchableOpacity
 } from 'react-native';
 //Import Document Picker
+import DocumentPicker from 'react-native-document-picker';
+
 
 function UploadEAPScreen() {
     const [singleFile, setSingleFile] = useState(null)

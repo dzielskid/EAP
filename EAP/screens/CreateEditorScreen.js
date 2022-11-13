@@ -1,47 +1,58 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput,button,Pressable } from 'react-native';
+import { StyleSheet, Text, View, TextInput,button,Pressable, Button } from 'react-native';
 
 function CreateEditorScreen({ navigation }) {
     const [Editor, setEditorName] = useState('');
-    const [Editoremail, setEditorEmail] = useState('13555 Peabody st');
-    const [Organization, setOrganizationName]=useState('Morgantown');
-        
-    const {onPress,title = 'Invite'}=props;
+    const [Editoremail, setEditorEmail] = useState('');
+    const [Organization, setOrganizationName]=useState('');
       
     return (
-        
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+        //Add button to "invite" that returns to the account screen
+        >
+
+            <Text>Editor Name: </Text>
+            <TextInput
+                placeholder=''
+                style={styles.inputBox}
+                onChangeText={(value) => setEditorName(value)}
+            />
+
+            <Text>Editor Email: </Text>
+            <TextInput
+                placeholder=''
+                style={styles.inputBox}
+                onChangeText={(value) => setEditorEmail(value)}
+            />
+
+            <Text>Organization: </Text>
+            <TextInput
+                placeholder=''
+                style={styles.inputBox}
+                onChangeText={(value) => setOrganizationName(value)}
+            />
+
+            <Button
+                title='Invite'
+                onPress={() => {
+                    navigation.goBack()
+                    console.log('New Editor Added')
+                }}
+            />
+            <Text>Editor Name: {Editor}</Text>
+            <Text>Editor Email: {Editoremail}</Text>
+            <Text>Editor Organization: {Organization}</Text>
+        </View>
+    );
       
-        
-          <View style={styles.container}>
+}
       
-            <Text>Editor Name:</Text>
-            <TextInput 
-              placeholder='' 
-              style={styles.input}
-              onChangeText={(value) => setEditorName(value)} />
-      
-            <Text>Editor Email:</Text>
-            <TextInput 
-              placeholder='' 
-              style={styles.input}
-              onChangeText={(value) => setEditorEmail(value)} />
-      
-      <Text>Organization Name:</Text>
-            <TextInput 
-              placeholder='' 
-              style={styles.input}
-              onChangeText={(value) => setOrganizationName(value)} />
-      
-      <Pressable style={styles.button} onPress={onPress}>
-        <Text style={styles.text}>{title}</Text>
-      </Pressable>
-      
-            <Text style={styles.result}>name: {EditorName}, Email: {Editoremail}, Organization: {OrganizationName}</Text>
-            
-          </View>
-        );
-      
-      }
-      
+const styles = StyleSheet.create({
+    inputBox: {
+        width: 250,
+        fontsize: 20,
+        borderWidth: 1,
+    },
+});
                
 export { CreateEditorScreen };
