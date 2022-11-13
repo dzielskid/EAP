@@ -27,28 +27,39 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+// npm install axios
+import axios from 'axios';
 // import { searchInstitutions } from "./Database_Functions";
 
 export default function App() {
   const [searchTerm, setTerm] = useState(""); // for search bar
 
   // connect frontend to backend
-  const [returnedData, setReturnedData] = useState("");
+  const [institutionData, setInstitutionData] = useState("");
   const getInstitutions = async () => {
-    const newData = await fetch("/api", {
-      method: "POST", // gets response from backend and makes it appear in frontend
+    console.log("entered getInstitutions");
+    
+    // have to use http: not https:  
+    const newData = await fetch("http://10.0.2.2:1433/api/searchInstitution", {
+      method: "POST",
       headers: {
-        // describes how data is being sent and accepted
-        "content-type": "application/json",
+      // describes how data is being sent and accepted
+        "Content-Type": "application/json",
         Accept: "application/json",
       },
       body: JSON.stringify({
         name: searchTerm,
       }),
-    }).then((res) => res.json());
-    console.log("entered getInstitutions");
-    console.log(newData);
-    setReturnedData(newData[0]);
+    }).then((response) => {
+      response.text();
+      console.log(response.text());
+    })
+    .catch((error) => {
+      console.log('fetch error: ', error)
+    });
+    // console.log(newData);
+    // setInstitutionData(newData.result);
+      
   };
   // console.log("App Starting..");
   return (

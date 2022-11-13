@@ -1,26 +1,29 @@
 // npm i npm-run-all
+// npm install cors
 
 const express = require("express"); // creates express server
 const dbFunction = require("./DB_Functions");
-const cors = require("cors");
+// const cors = require("cors");
 const { response } = require("express");
 
-const API_PORT = process.env.PORT || 5000;
+const API_PORT = process.env.PORT || 1433;
 const app = express(); // starts server
+var cors = require('cors');
 
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 app.use(express.json()); // this and urlencoded allows for passing json from front end to backend
-app.use(express.urlencoded());
-app.use(cors()); // allows for connection b/w front end and back end
 
-app.post("/api", async (req, res) => {
-  console.log("entered api");
-  const result = await dbFunction.searchInstitutions(req.body.name);
+
+app.post("/api/searchInstitution", async (req, res) => {
+  console.log("entered search institution");
+  const result = await dbFunction.searchInstitutions(req.body.name); // this works
   res.send(result.redcordset); // sends an object
+  console.log(result.recordset);
 });
-
-
+/*
 dbFunction.searchInstitutions("WEST").then((res) => {
   console.log(res.recordset); // .recordset gives array of objects
 });
-
+*/
 app.listen(API_PORT, () => console.log("Listening on port " + API_PORT));

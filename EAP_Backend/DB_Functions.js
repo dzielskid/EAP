@@ -7,6 +7,7 @@ const config = require("./DB_Connection.js");
 const sql = require("mssql");
 
 const searchInstitutions = async (searchTerm) => {
+  console.log(searchTerm);
   try {
     let pool = await sql.connect(config);
     let institutions = await pool
@@ -19,6 +20,7 @@ const searchInstitutions = async (searchTerm) => {
     return institutions;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };
 
