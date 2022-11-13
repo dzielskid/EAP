@@ -21,6 +21,7 @@ import { InstitutionVerificationScreen } from "./screens/InstitutionVerficationS
 import { UploadEAPScreen } from "./screens/UploadEAPScreen.js";
 
 import TimerContainer from "./components/Timer.js"
+import CallContainer from "./components/call911.js"
 // import { searchInstitutions } from "./Database_Functions";
 
 function HomeStack({ navigation }) {
@@ -61,7 +62,7 @@ function HomeScreen({ navigation }) {
         <View style={{ flex: 1, alignItems: 'center' }}
         // Flow: sidebar links:(Login, Account, Logout),    University
         >
-            <Text style={{ paddingVertical: 50 }}>Call 911 Button</Text>
+            <CallContainer />
             <TimerContainer />
             <Text style={{ paddingVertical: 50 }}>Searchbar</Text>
             <Button
