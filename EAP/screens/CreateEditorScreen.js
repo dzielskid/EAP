@@ -25,13 +25,6 @@ function CreateEditorScreen({ navigation }) {
                 onChangeText={(value) => setEditorEmail(value)}
             />
 
-            <Text>Organization: </Text>
-            <TextInput
-                placeholder=''
-                style={styles.inputBox}
-                onChangeText={(value) => setOrganizationName(value)}
-            />
-
             <Button
                 title='Invite'
                 onPress={() => {
@@ -41,7 +34,6 @@ function CreateEditorScreen({ navigation }) {
             />
             <Text>Editor Name: {Editor}</Text>
             <Text>Editor Email: {Editoremail}</Text>
-            <Text>Editor Organization: {Organization}</Text>
         </View>
     );
       
