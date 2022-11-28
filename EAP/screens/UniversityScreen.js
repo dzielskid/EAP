@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Button, Alert } from 'react-native';
+import { View, Button} from 'react-native';
 import TimerContainer from "../components/Timer.js"
 
 import CallContainer from "../components/call911.js";

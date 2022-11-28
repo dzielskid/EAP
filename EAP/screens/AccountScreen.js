@@ -1,12 +1,15 @@
-import * as React from 'react';
+import { useContext, useCase} from 'react';
 import { View, Button, Text, TouchableOpacity, Alert, StyleSheet, Touchable } from 'react-native';
+import { LoginContext, LoginProvider } from '../Login_Context';
 
 
 function AccountScreen({ navigation }) {
+    const { isSignedIn, setSignedIn, username, setUsername, userLevel, setUserLevel } = useContext(LoginContext)
     return (
         <View style={{ flex: 1, paddingVertical:25 }}>
             <TouchableOpacity
                 style={styles.buttons}
+                disabled={!(userLevel === "Super Admin")}
                 onPress={() => navigation.navigate('Verify Institutions')}
             >
                 <Text style={styles.buttonstext}>Accept New Institutions</Text>
@@ -21,6 +24,7 @@ function AccountScreen({ navigation }) {
 
             <TouchableOpacity
                 style={styles.buttons}
+                disabled={!(userLevel === "Super Admin")}
                 onPress={() => navigation.navigate('Create Admin')}
             >
                 <Text style={styles.buttonstext}>Add Admin</Text>
@@ -28,6 +32,7 @@ function AccountScreen({ navigation }) {
 
             <TouchableOpacity
                 style={styles.buttons}
+                disabled={!(userLevel === "Super Admin")}
                 onPress={() => navigation.navigate('Delete Admin')}
             >
                 <Text style={styles.buttonstext}>Remove Admin</Text>
@@ -35,6 +40,7 @@ function AccountScreen({ navigation }) {
 
             <TouchableOpacity
                 style={styles.buttons}
+                disabled={!(userLevel === "Admin")}
                 onPress={() => navigation.navigate('Create Editor')}
             >
                 <Text style={styles.buttonstext}>Add Editor</Text>
@@ -42,6 +48,7 @@ function AccountScreen({ navigation }) {
 
             <TouchableOpacity
                 style={styles.buttons}
+                disabled={!(userLevel === "Admin")}
                 onPress={() => navigation.navigate('Delete Editor')}
             >
                 <Text style={styles.buttonstext}>Remove Editor</Text>
@@ -49,8 +56,12 @@ function AccountScreen({ navigation }) {
 
             <TouchableOpacity
                 style={styles.buttons}
+                disabled={!(isSignedIn)}
                 onPress={() => {
-                    Alert.alert('', 'User Logged Out')
+                    setSignedIn(false)
+                    setUsername("Guest")
+                    setUserLevel("Guest")
+                    Alert.alert('User Logged Out')
                     navigation.goBack()
                 }}
             >

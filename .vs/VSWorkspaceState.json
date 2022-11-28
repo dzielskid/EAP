@@ -2,7 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\EAP",
-    "\\EAP\\components"
+    "\\EAP\\components",
+    "\\EAP\\screens"
   ],
   "PreviewInSolutionExplorer": false
 }

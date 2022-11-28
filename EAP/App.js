@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Button, TouchableOpacity, View, Text, Image, Alert, ScrollView, TextInput, StyleSheet } from 'react-native';
+import { useContext, userContext } from 'react'
+import { Button, View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator, DrawerItemList, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
@@ -23,6 +23,8 @@ import { UploadEAPScreen } from "./screens/UploadEAPScreen.js";
 import TimerContainer from "./components/Timer.js"
 import CallContainer from "./components/call911.js"
 // import { searchInstitutions } from "./Database_Functions";
+
+import { LoginContext, LoginProvider } from "./Login_Context.js"
 
 function HomeStack({ navigation }) {
     return (
@@ -58,6 +60,7 @@ function AccountStack({ navigation }) {
 
 // Initial Screen on app opening
 function HomeScreen({ navigation }) {
+    const { isSignedIn, setSignedIn, username, setUsername, userLevel, setUserLevel } = useContext(LoginContext)
     return (
         <View style={{ flex: 1, alignItems: 'center' }}
         // Flow: sidebar links:(Login, Account, Logout),    University
@@ -65,6 +68,7 @@ function HomeScreen({ navigation }) {
             <CallContainer />
             <TimerContainer />
             <Text style={{ paddingVertical: 50 }}>Searchbar</Text>
+            <Text>{username} ({userLevel})}</Text>
             <Button
                 title="University Example"
                 onPress={() => navigation.navigate('Universities')}
@@ -78,15 +82,23 @@ const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const CustomDrawer = props => {
+    const { isSignedIn, setSignedIn, username, setUsername, userLevel, setUserLevel } = useContext(LoginContext)
     return (
         <View style={{ flex: 1 }}>
             <DrawerContentScrollView {...props}>
-                <Text style={{ textAlign: "center", paddingVertical: 20, fontSize: 20, backgroundColor: "grey", /**Change bgcolor to light grey*/ }}>User Name</Text>
-                <Text style={{ textAlign: "center", paddingBottom: 20, backgroundColor: "grey", /**color: "grey"*/ }}>User Level</Text>
+                <Text>{username}</Text>
+                <Text>{userLevel    }</Text>
                 <DrawerItemList {...props} />
                 <DrawerItem label="Logout" onPress={() => {
                     //TODO Only enable if user is currently logged in, log out current user, toggle sidebar
-                    console.log("Logged out.")
+                    if (isSignedIn) {
+                        setSignedIn(false)
+                        setUsername("Guest")
+                        setUserLevel("Guest")
+                        console.log("User logged out.")
+                    } else {
+                        console.log("No user to logout.")
+                    }
                 }} />
             </DrawerContentScrollView>
         </View>
@@ -95,13 +107,16 @@ const CustomDrawer = props => {
 
 function App() {
     return (
-        <NavigationContainer>
-            <Drawer.Navigator initialRouteName="Home" drawerContent={props => <CustomDrawer {...props} />}>
-                <Drawer.Screen name="Institutions" component={HomeStack} />
-                <Drawer.Screen name="Login" component={LoginScreen} />
-                <Drawer.Screen name="Account" component={AccountStack} />
-            </Drawer.Navigator>
-        </NavigationContainer>
+        <LoginProvider>
+            <NavigationContainer>
+                <Drawer.Navigator initialRouteName="Home" drawerContent={props => <CustomDrawer {...props} />}>
+                    <Drawer.Screen name="Institutions" component={HomeStack} />
+                    <Drawer.Screen name="Login" component={LoginScreen} />
+                    <Drawer.Screen name="Account" component={AccountStack} />
+                </Drawer.Navigator>
+            </NavigationContainer>
+        </LoginProvider>
+
     );
     {/**
         // console.log("App Starting..");
