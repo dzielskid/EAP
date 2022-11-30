@@ -1,32 +1,5 @@
-/*=============================================================================
- |   File Purpose:  Starts app as whole
- |
- |       Author:  
- |     Language:  JavaScript
- |                      NAME OF THE COMPILER USED TO COMPILE IT WHEN IT
- |                      WAS TESTED
- |   To Compile:  in terminal run 'npm start' command
- |
- +-----------------------------------------------------------------------------
- |
- |  Description:  DESCRIBE THE PROBLEM THAT WAS WRITTEN TO
- |      SOLVE.
- |
- |        Input:  NONE
- |
- |       Output:  DESCRIBE THE OUTPUT PRODUCED.
- |
- |    Algorithm:  
- |
- |   Required Features Not Included:  Start on Main Screen
- |
- |   Known Bugs:  
- |
- *===========================================================================*/
-
- 
-import { useState} from 'react';
-import { Button, TouchableOpacity, View, Text, Image, Alert, ScrollView, TextInput, StyleSheet } from 'react-native';
+import { useContext, userContext } from 'react'
+import { Button, View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator, DrawerItemList, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
@@ -47,33 +20,54 @@ import { InstitutionRequestsScreen } from './screens/InstitutionReuestsScreen.js
 import { InstitutionVerificationScreen } from "./screens/InstitutionVerficationScreen.js";
 import { UploadEAPScreen } from "./screens/UploadEAPScreen.js";
 
-import { StatusBar } from 'expo-status-bar';
-import moment from 'moment';
+import TimerContainer from "./components/Timer.js"
+import CallContainer from "./components/call911.js"
 // import { searchInstitutions } from "./Database_Functions";
 
+import { LoginContext, LoginProvider } from "./Login_Context.js"
 
+function HomeStack({ navigation }) {
+    return (
+        <Stack.Navigator initialRouteName="Home" /* Intial screen as app loads, see Home function above*/>
+            <Stack.Screen name="Institutions" component={HomeScreen} />
+            <Stack.Screen name="Universities" component={UniversityScreen} />
+            <Stack.Screen name="EAP" component={EAPDisplayScreen} />
+            <Stack.Screen name="Incident Reports" component={IncidentReportsScreen} />
+            <Stack.Screen name="Incident Report" component={IncidentResponseDisplayScreen} />
+            <Stack.Screen name="Upload EAP" component={UploadEAPScreen} />
+
+        </Stack.Navigator>
+    )
+}
+
+
+function AccountStack({ navigation }) {
+    return (
+        <Stack.Navigator initialRouteName="Home" /* Intial screen as app loads, see Home function above*/>
+            <Stack.Screen name="Account" component={AccountScreen} />
+            <Stack.Screen name="Create Admin" component={CreateAdminScreen} />
+            <Stack.Screen name="Create Editor" component={CreateEditorScreen} />
+            <Stack.Screen name="Create Institution" component={CreateInstitutionScreen} />
+            <Stack.Screen name="Delete Admin" component={DeleteAdminScreen} />
+            <Stack.Screen name="Delete Editor" component={DeleteEditorScreen} />
+            <Stack.Screen name="Delete Institution" component={DeleteInstitutionScreen} />
+            <Stack.Screen name="Institution Requests" component={InstitutionRequestsScreen} />
+            <Stack.Screen name="Verify Institutions" component={InstitutionVerificationScreen} />
+
+        </Stack.Navigator>
+    )
+}
 
 // Initial Screen on app opening
 function HomeScreen({ navigation }) {
+    const { isSignedIn, setSignedIn, username, setUsername, userLevel, setUserLevel } = useContext(LoginContext)
     return (
-        <View style={{ flex: 1, alignItems: 'center'}}
-            // Flow: sidebar links:(Login, Account, Logout),    University
+        <View style={{ flex: 1, alignItems: 'center' }}
+        // Flow: sidebar links:(Login, Account, Logout),    University
         >
-            <Button
-                title="Login"
-                onPress={() => navigation.navigate('Login')}
-            />
-            <Button
-                title="temp Account Button"
-                onPress={() => navigation.navigate('Account')}
-            />
-            <Button
-                title="Logout"
-                onPress={() => Alert.alert("User Logged Out")}
-            />
-            <Text style={{paddingVertical:50}}>Call 911 Button</Text>
-            <Text style={{ paddingVertical: 50 }}>Timer</Text>
-            <Text style={{ paddingVertical: 50 }}>Searchbar</Text>
+            <View style={styles.vSpace}/>
+            <CallContainer />
+            <TimerContainer />
             <Button
                 title="University Example"
                 onPress={() => navigation.navigate('Universities')}
@@ -87,15 +81,25 @@ const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const CustomDrawer = props => {
+    const { isSignedIn, setSignedIn, username, setUsername, userLevel, setUserLevel } = useContext(LoginContext)
     return (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
             <DrawerContentScrollView {...props}>
-                <Text style={{ textAlign: "center", paddingVertical: 20, fontSize: 20, backgroundColor: "grey", /**Change bgcolor to light grey*/}}>User Name</Text>
-                <Text style={{ textAlign: "center", paddingBottom: 20, backgroundColor: "grey", /**color: "grey"*/}}>User Level</Text>
+                <View style={ styles.userInfoContainer }>
+                    <Text style={isSignedIn ? styles.signedInUsername : styles.guestUsername}>{username}</Text>
+                    <Text style={styles.userlevel}>{isSignedIn ? userLevel : ""}</Text>
+                </View>
                 <DrawerItemList {...props} />
                 <DrawerItem label="Logout" onPress={() => {
                     //TODO Only enable if user is currently logged in, log out current user, toggle sidebar
-                    console.log("Logged out.")
+                    if (isSignedIn) {
+                        setSignedIn(false)
+                        setUsername("Guest")
+                        setUserLevel("Guest")
+                        console.log("User logged out.")
+                    } else {
+                        console.log("No user to logout.")
+                    }
                 }} />
             </DrawerContentScrollView>
         </View>
@@ -104,27 +108,16 @@ const CustomDrawer = props => {
 
 function App() {
     return (
-        <NavigationContainer drawerContent={props => <CustomDrawer {...props} />}>
-            <Stack.Navigator initialRouteName="Home" /* Intial screen as app loads, see Home function above*/>
-                <Stack.Screen name="Institutions" component={HomeScreen} />
-                <Stack.Screen name="Account" component={AccountScreen}/>
-                <Stack.Screen name="Universities" component={UniversityScreen} />
-                <Stack.Screen name="Create Admin" component={CreateAdminScreen} />
-                <Stack.Screen name="Create Editor" component={CreateEditorScreen} />
-                <Stack.Screen name="Create Institution" component={CreateInstitutionScreen} />
-                <Stack.Screen name="Delete Admin" component={DeleteAdminScreen} />
-                <Stack.Screen name="Delete Editor" component={DeleteEditorScreen} />
-                <Stack.Screen name="Delete Institution" component={DeleteInstitutionScreen} />
-                <Stack.Screen name="EAP" component={EAPDisplayScreen} />
-                <Stack.Screen name="Incident Reports" component={IncidentReportsScreen} />
-                <Stack.Screen name="Incident Report" component={IncidentResponseDisplayScreen} />
-                <Stack.Screen name="Institution Requests" component={InstitutionRequestsScreen}/>
-                <Stack.Screen name="Verify Institutions" component={InstitutionVerificationScreen} />
-                <Stack.Screen name="Login" component={LoginScreen} />
-                <Stack.Screen name="Upload EAP" component={UploadEAPScreen} />
+        <LoginProvider>
+            <NavigationContainer>
+                <Drawer.Navigator initialRouteName="Home" drawerContent={props => <CustomDrawer {...props} />}>
+                    <Drawer.Screen name="Institutions" component={HomeStack} />
+                    <Drawer.Screen name="Login" component={LoginScreen} />
+                    <Drawer.Screen name="Account" component={AccountStack} />
+                </Drawer.Navigator>
+            </NavigationContainer>
+        </LoginProvider>
 
-            </Stack.Navigator>
-        </NavigationContainer>
     );
     {/**
         // console.log("App Starting..");
@@ -144,19 +137,42 @@ function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#777",
-    padding: 8,
-    margin: 10,
-    width: 200,
-  },
-});
+    vSpace: {
+        height: 30,
+    },
+    container: {
+        flex: 1,
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: "#777",
+        padding: 8,
+        margin: 10,
+        width: 200,
+    },
+    userInfoContainer: {
+        backgroundColor: "#c2c2c2",
+        height: 100,
+        alignItems: "center",
+    },
+    guestUsername: {
+        paddingTop: 10,
+        fontSize: 30,
+        height: 100,
+    },
+    signedInUsername: {
+        fontSize: 20,
+        fontWeight: "bold",
+        paddingVertical: 10,
+        height: 50,
+    },
+    userlevel: {
+        fontStyle: "italic",
+        fontSize: 15,
+    }
+}); 
 
 export default App;

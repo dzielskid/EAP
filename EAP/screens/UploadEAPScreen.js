@@ -56,6 +56,8 @@ const uploadImage = async ()
 /// THE OLD ONE **************
 
 //Import Document Picker
+import DocumentPicker from 'react-native-document-picker';
+
 
 function UploadEAPScreen() {
     const [singleFile, setSingleFile] = useState(null)
