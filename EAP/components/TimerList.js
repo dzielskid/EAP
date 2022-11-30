@@ -19,6 +19,7 @@ class ListComponent extends Component {
 const styles = StyleSheet.create({
     scroll: {
         maxHeight: "30%",
+        width: 400,
         backgroundColor: "#FFFFFF",
     },
 

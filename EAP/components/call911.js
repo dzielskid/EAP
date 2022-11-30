@@ -27,19 +27,20 @@ class CallContainer extends Component {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: "#FFFFFF",
-        paddingTop: "3%",
+        backgroundColor: "#f02d2d",
+        paddingVertical: 5,
         display: "flex",
         borderRadius: 20,
-        borderWidth: 1,
-        borderColor: "#000000",
+        borderWidth: 3,
+        borderColor: "#a90b0b",
         height: 60,
         width: 200,
     },
 
     buttonText: {
-        color: "#000000",
-        fontSize: 20,
+        color: "#f3f5fb",
+        fontSize: 30,
+        fontWeight: "bold",
         alignSelf: "center"
     }
 });

@@ -103,7 +103,7 @@ class TimerContainer extends Component {
             <View style={styles.container}>
 
                 <View style={styles.parent}>
-                    <Text style={styles.child}>{'  ' + padToTwo(this.state.hr) + ' : '}</Text>
+                    <Text style={styles.child}>{'' + padToTwo(this.state.hr) + ' : '}</Text>
                     <Text style={styles.child}>{padToTwo(this.state.min) + ' : '}</Text>
                     <Text style={styles.child}>{padToTwo(this.state.sec)}</Text>
                 </View>
@@ -111,14 +111,14 @@ class TimerContainer extends Component {
                 <View style={styles.buttonParent}>
 
                     <TouchableOpacity
-                        style={styles.button}
+                        style={!this.state.start ? styles.startButton : styles.stopButton}
                         onPress={!this.state.start ? this.handleToggle : this.handleReset}
                     >
                         <Text style={styles.buttonText}>{!this.state.start ? 'Start' : 'Stop'}</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        style={styles.button}
+                        style={!this.state.start ? styles.disabledButton : styles.stampButton}
                         disabled={!this.state.start}
                         onPress={() => {
                             this.showActionDialog(true)
@@ -159,11 +159,9 @@ const styles = StyleSheet.create({
     parent: {
         display: "flex",
         flexDirection: "row",
-        paddingLeft: "6%",
-        paddingRight: "6%",
+        alignSelf: "center",
         paddingTop: ".5%",
         paddingBottom: ".5%",
-        maxWidth: "63%"
     },
 
     child: {
@@ -180,21 +178,74 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        backgroundColor: "#FFFFFF",
-        paddingTop: "5%",
-        paddingBottom: "5%",
+        backgroundColor: "#c2c2c2",
+        paddingVertical: 15,
         paddingLeft: "5%",
         paddingRight: "5%",
         display: "flex",
         borderRadius: 20,
-        borderWidth: 1,
-        borderColor: "#000000",
+        borderWidth: 2,
+        borderColor: "#707070",
         height: 60,
+        width: 150,
+    },
+
+    startButton: {
+        backgroundColor: "#3adb21",
+        paddingVertical: 15,
+        paddingLeft: "5%",
+        paddingRight: "5%",
+        display: "flex",
+        borderRadius: 20,
+        borderWidth: 2,
+        borderColor: "#2eaf1a",
+        height: 60,
+        width: 150,
+    },
+
+    stampButton: {
+        backgroundColor: "#2159db",
+        paddingVertical: 15,
+        paddingLeft: "5%",
+        paddingRight: "5%",
+        display: "flex",
+        borderRadius: 20,
+        borderWidth: 2,
+        borderColor: "#173e99",
+        height: 60,
+        width: 150,
+    },
+
+    stopButton: {
+        backgroundColor: "#f02d2d",
+        paddingVertical: 15,
+        paddingLeft: "5%",
+        paddingRight: "5%",
+        display: "flex",
+        borderRadius: 20,
+        borderWidth: 2,
+        borderColor: "#a90b0b",
+        height: 60,
+        width: 150,
+    },
+
+    disabledButton: {
+        backgroundColor: "#c2c2c2",
+        paddingVertical: 15,
+        paddingLeft: "5%",
+        paddingRight: "5%",
+        display: "flex",
+        borderRadius: 20,
+        borderWidth: 2,
+        borderColor: "#707070",
+        height: 60,
+        width: 150,
     },
 
     buttonText: {
-        color: "#000000",
+        color: "#f3f5fb",
         fontSize: 20,
+        fontWeight: "bold",
         alignSelf: "center"
     }
 });
