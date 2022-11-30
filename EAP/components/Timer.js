@@ -100,7 +100,7 @@ class TimerContainer extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View>
 
                 <View style={styles.parent}>
                     <Text style={styles.child}>{'' + padToTwo(this.state.hr) + ' : '}</Text>
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignSelf: "center",
         paddingTop: ".5%",
-        paddingBottom: ".5%",
+        //paddingBottom: ".5%",
     },
 
     child: {
@@ -175,19 +175,6 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         marginTop: "5%",
         marginBottom: "5%"
-    },
-
-    button: {
-        backgroundColor: "#c2c2c2",
-        paddingVertical: 15,
-        paddingLeft: "5%",
-        paddingRight: "5%",
-        display: "flex",
-        borderRadius: 20,
-        borderWidth: 2,
-        borderColor: "#707070",
-        height: 60,
-        width: 150,
     },
 
     startButton: {
@@ -237,7 +224,7 @@ const styles = StyleSheet.create({
         display: "flex",
         borderRadius: 20,
         borderWidth: 2,
-        borderColor: "#707070",
+        borderColor: "#afafaf",
         height: 60,
         width: 150,
     },

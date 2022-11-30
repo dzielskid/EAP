@@ -67,8 +67,6 @@ function HomeScreen({ navigation }) {
         >
             <CallContainer />
             <TimerContainer />
-            <Text style={{ paddingVertical: 50 }}>Searchbar</Text>
-            <Text>{username} ({userLevel})}</Text>
             <Button
                 title="University Example"
                 onPress={() => navigation.navigate('Universities')}
@@ -86,8 +84,10 @@ const CustomDrawer = props => {
     return (
         <View style={{ flex: 1 }}>
             <DrawerContentScrollView {...props}>
-                <Text>{username}</Text>
-                <Text>{userLevel    }</Text>
+                <View style={ styles.userInfoContainer }>
+                    <Text style={isSignedIn ? styles.signedInUsername : styles.guestUsername}>{username}</Text>
+                    <Text style={styles.userlevel}>{isSignedIn ? userLevel : ""}</Text>
+                </View>
                 <DrawerItemList {...props} />
                 <DrawerItem label="Logout" onPress={() => {
                     //TODO Only enable if user is currently logged in, log out current user, toggle sidebar
@@ -149,6 +149,25 @@ const styles = StyleSheet.create({
         margin: 10,
         width: 200,
     },
-});
+    userInfoContainer: {
+        backgroundColor: "#c2c2c2",
+        height: 100,
+        alignItems: "center",
+    },
+    guestUsername: {
+        fontSize: 40,
+        height: 100,
+    },
+    signedInUsername: {
+        fontSize: 20,
+        fontWeight: "bold",
+        paddingVertical: 10,
+        height: 50,
+    },
+    userlevel: {
+        fontStyle: "italic",
+        fontSize: 15,
+    }
+}); 
 
 export default App;
