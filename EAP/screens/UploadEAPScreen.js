@@ -13,7 +13,6 @@ import {
 //Import Document Picker
 import DocumentPicker from 'react-native-document-picker';
 
-
 function UploadEAPScreen() {
     const [singleFile, setSingleFile] = useState(null)
 
@@ -51,13 +50,7 @@ function UploadEAPScreen() {
         try {
             const res = await DocumentPicker.pick({
                 // Provide which type of file you want user to pick
-                type: [DocumentPicker.types.allFiles],
-                // There can me more options as well
-                // DocumentPicker.types.allFiles
-                // DocumentPicker.types.images
-                // DocumentPicker.types.plainText
-                // DocumentPicker.types.audio
-                // DocumentPicker.types.pdf
+                type: [DocumentPicker.types.pdf],
             });
             // Printing the log realted to the file
             console.log('res : ' + JSON.stringify(res));
@@ -109,13 +102,13 @@ function UploadEAPScreen() {
             <TouchableOpacity
                 style={styles.buttonStyle}
                 activeOpacity={0.5}
-                onPress={selectFile}>
+                onPress={selectFile()}>
                 <Text style={styles.buttonTextStyle}>Select File</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.buttonStyle}
                 activeOpacity={0.5}
-                onPress={uploadImage}>
+                onPress={uploadImage()}>
                 <Text style={styles.buttonTextStyle}>Upload File</Text>
             </TouchableOpacity>
         </View>

@@ -1,9 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\EAP",
-    "\\EAP\\components",
-    "\\EAP\\screens"
+    "\\.idea",
+    "\\EAP"
   ],
+  "SelectedNode": "\\EAP_Backend",
   "PreviewInSolutionExplorer": false
 }
