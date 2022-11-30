@@ -11,6 +11,7 @@ function UniversityScreen({ navigation }) {
         <View style={{ flex: 1, alignItems: 'center',}}
         //Flow sidebar: Login, Account, Logout      link to Add EAP, Incident Response Reports, EAP Display
         >
+            <View style={styles.vSpace}/>
             <CallContainer style={{ paddingVertical: 50 }}>Call 911 Button</CallContainer>
             <TimerContainer />
             <View style={styles.buttonParent}>
@@ -39,6 +40,9 @@ function UniversityScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+    vSpace: {
+        height: 30,
+    },
 
     buttonParent: {
         display: "flex",

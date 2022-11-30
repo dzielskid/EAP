@@ -65,6 +65,7 @@ function HomeScreen({ navigation }) {
         <View style={{ flex: 1, alignItems: 'center' }}
         // Flow: sidebar links:(Login, Account, Logout),    University
         >
+            <View style={styles.vSpace}/>
             <CallContainer />
             <TimerContainer />
             <Button
@@ -136,6 +137,9 @@ function App() {
 }
 
 const styles = StyleSheet.create({
+    vSpace: {
+        height: 30,
+    },
     container: {
         flex: 1,
         backgroundColor: "#fff",
@@ -155,7 +159,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     guestUsername: {
-        fontSize: 40,
+        paddingTop: 10,
+        fontSize: 30,
         height: 100,
     },
     signedInUsername: {
