@@ -25,6 +25,7 @@ import CallContainer from "./components/call911.js"
 // import { searchInstitutions } from "./Database_Functions";
 
 import { LoginContext, LoginProvider } from "./Login_Context.js"
+import SearchContainer from './components/SearchInstitution.js';
 
 function HomeStack({ navigation }) {
     return (
@@ -67,8 +68,8 @@ function HomeScreen({ navigation }) {
         >
             <CallContainer />
             <TimerContainer />
-            <Text style={{ paddingVertical: 50 }}>Searchbar</Text>
-            <Text>{username} ({userLevel})}</Text>
+            <SearchContainer />
+            <Text>{username} ({userLevel})</Text>
             <Button
                 title="University Example"
                 onPress={() => navigation.navigate('Universities')}
@@ -76,7 +77,6 @@ function HomeScreen({ navigation }) {
         </View>
     );
 }
-//const [searchTerm, setTerm] = useState(""); // for search bar
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -118,21 +118,6 @@ function App() {
         </LoginProvider>
 
     );
-    {/**
-        // console.log("App Starting..");
-        return (
-            <View style={styles.container}>
-                <Button onPress={() => getData("/test2")} title="click" />
-                <Text>{returnedData}</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Search Institutions..."
-                    onChangeText={(val) => setTerm(val)} //Sets searchTerm to whatever is typed in search textbox at any moment
-                />
-                <StatusBar style="auto" />
-            </View>
-        );
-    */}
 }
 
 const styles = StyleSheet.create({
