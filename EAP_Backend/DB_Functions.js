@@ -12,7 +12,7 @@ const searchInstitutions = async () => {
     let institutions = await pool
       .request()
       .query(
-        "SELECT * FROM [dbo].[INSTITUTIONS];"
+        "SELECT * FROM [dbo].[INSTITUTIONS] order by Institution_Name asc;"
       );
     return institutions;
   } catch (error) {

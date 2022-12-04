@@ -3,60 +3,31 @@ import {
   StyleSheet,
   Text,
   View,
-  FlatList,
-  SafeAreaView,
+  FlatList
 } from "react-native";
-import { interpolateNode } from "react-native-reanimated";
-
-// definition of the Item, which will be rendered in the FlatList
-const Item = ({ name, details }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{name}</Text>
-    <Text style={styles.details}>{details}</Text>
-  </View>
-);
+import { ScrollView } from "react-native-gesture-handler";
+import ItemDetails from "./ItemDetails";
 
 // the filter
-const SearchList = ({ data, input, setInput }) => {
-  const renderItem = ({ item }) => {
-    // when no input, show all
-    if (searchPhrase === "") {
-      return <Item name={item.name} details={item.details} />;
-    }
-    // filter of the name
-    if (item.name.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
-      return <Item name={item.name} details={item.details} />;
-    }
-    // filter of the description
-    if (item.details.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
-      return <Item name={item.name} details={item.details} />;
-    }
-  };
-
+const SearchList = ({ data, input, setInput, navigation }) => {
   return (
-      <View style={{marginTop: 10}} >
+      <ScrollView style={{marginTop: 10, maxHeight: "50%"}} >
         <FlatList
           data={data}
           renderItem={({item}) => {
             if(input === "") {
               return (
-                <View style={{marginVertical: 10}} >
-                  <Text style={{fontSize:14, fontStyle:"bold"}}>{item.name}</Text>
-                  <Text style={{borderColor:"gray", borderWidth:1, height:1, marginTop: 5}}>{item.name}</Text>
-                </View>
+                <ItemDetails item={item} navigation={navigation}/>
               )
             }
             if(item.name.toLowerCase().includes(input.toLowerCase())) {
               return (
-                <View style={{marginVertical: 10}} >
-                  <Text style={{fontSize:14, fontStyle:"bold"}}>{item.name}</Text>
-                  <Text style={{borderColor:"gray", borderWidth:1, height:1, marginTop: 5}}>{item.name}</Text>
-                </View>
+                <ItemDetails item={item} navigation={navigation}/>
               )
             }
           }}
         />
-      </View>
+      </ScrollView>
   );
 };
 

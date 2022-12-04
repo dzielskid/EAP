@@ -22,10 +22,10 @@ import { UploadEAPScreen } from "./screens/UploadEAPScreen.js";
 
 import TimerContainer from "./components/Timer.js"
 import CallContainer from "./components/call911.js"
+import SearchInstitutionContainer from './components/SearchInstitution.js';
 // import { searchInstitutions } from "./Database_Functions";
 
 import { LoginContext, LoginProvider } from "./Login_Context.js"
-import SearchContainer from './components/SearchInstitution.js';
 
 function HomeStack({ navigation }) {
     return (
@@ -68,8 +68,7 @@ function HomeScreen({ navigation }) {
         >
             <CallContainer />
             <TimerContainer />
-            <SearchContainer />
-            <Text>{username} ({userLevel})</Text>
+            <SearchInstitutionContainer navigation={navigation}/>
             <Button
                 title="University Example"
                 onPress={() => navigation.navigate('Universities')}
