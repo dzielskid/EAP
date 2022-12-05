@@ -69,10 +69,6 @@ function HomeScreen({ navigation }) {
             <CallContainer />
             <TimerContainer />
             <SearchInstitutionContainer navigation={navigation}/>
-            <Button
-                title="University Example"
-                onPress={() => navigation.navigate('Universities')}
-            />
         </View>
     );
 }

@@ -3,6 +3,7 @@ import { View, Button} from 'react-native';
 import TimerContainer from "../components/Timer.js"
 
 import CallContainer from "../components/call911.js";
+import SearchEAPsContainer from '../components/SearchEAPs.js';
 
 function UniversityScreen({ navigation}) {
     return (
@@ -23,6 +24,7 @@ function UniversityScreen({ navigation}) {
                 title="Facility Example"
                 onPress={() => navigation.navigate('EAP')}
             />
+            <SearchEAPsContainer navigation={navigation} />
         </View>
     );
 }

@@ -6,7 +6,7 @@ import {
   FlatList
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import ItemDetails from "./ItemDetails";
+import ItemDetails from "./InstitutionDetails";
 
 // the filter
 const SearchList = ({ data, input, setInput, navigation }) => {
@@ -31,23 +31,8 @@ const SearchList = ({ data, input, setInput, navigation }) => {
   );
 };
 
+
+
 export default SearchList;
 
-const styles = StyleSheet.create({
-  list__container: {
-    margin: 10,
-    height: "85%",
-    width: "100%",
-  },
-  item: {
-    margin: 30,
-    borderBottomWidth: 2,
-    borderBottomColor: "lightgrey"
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 5,
-    fontStyle: "italic",
-  },
-});
+const styles = StyleSheet.create({});
