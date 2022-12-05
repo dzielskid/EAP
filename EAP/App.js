@@ -66,6 +66,7 @@ function HomeScreen({ navigation }) {
         <View style={{ flex: 1, alignItems: 'center' }}
         // Flow: sidebar links:(Login, Account, Logout),    University
         >
+            <View style={styles.vSpace}/>
             <CallContainer />
             <TimerContainer />
             <SearchInstitutionContainer navigation={navigation}/>
@@ -81,8 +82,10 @@ const CustomDrawer = props => {
     return (
         <View style={{ flex: 1 }}>
             <DrawerContentScrollView {...props}>
-                <Text>{username}</Text>
-                <Text>{userLevel    }</Text>
+                <View style={ styles.userInfoContainer }>
+                    <Text style={isSignedIn ? styles.signedInUsername : styles.guestUsername}>{username}</Text>
+                    <Text style={styles.userlevel}>{isSignedIn ? userLevel : ""}</Text>
+                </View>
                 <DrawerItemList {...props} />
                 <DrawerItem label="Logout" onPress={() => {
                     //TODO Only enable if user is currently logged in, log out current user, toggle sidebar
@@ -116,6 +119,9 @@ function App() {
 }
 
 const styles = StyleSheet.create({
+    vSpace: {
+        height: 30,
+    },
     container: {
         flex: 1,
         backgroundColor: "#fff",
@@ -129,6 +135,26 @@ const styles = StyleSheet.create({
         margin: 10,
         width: 200,
     },
-});
+    userInfoContainer: {
+        backgroundColor: "#c2c2c2",
+        height: 100,
+        alignItems: "center",
+    },
+    guestUsername: {
+        paddingTop: 10,
+        fontSize: 30,
+        height: 100,
+    },
+    signedInUsername: {
+        fontSize: 20,
+        fontWeight: "bold",
+        paddingVertical: 10,
+        height: 50,
+    },
+    userlevel: {
+        fontStyle: "italic",
+        fontSize: 15,
+    }
+}); 
 
 export default App;

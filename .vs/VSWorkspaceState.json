@@ -2,8 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\EAP",
-    "\\EAP\\components",
-    "\\EAP\\screens"
+    "\\EAP\\components"
   ],
+  "SelectedNode": "\\EAP\\components\\Timer.js",
   "PreviewInSolutionExplorer": false
 }

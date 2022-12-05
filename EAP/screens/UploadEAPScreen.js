@@ -1,17 +1,63 @@
 // Example to Pick and Upload files in React Native
 // https://aboutreact.com/file-uploading-in-react-native/
 
-//Import React
-import { useState } from 'react';
-//Import core components
-import {
-    StyleSheet,
-    Text,
-    View,
-    TouchableOpacity
-} from 'react-native';
+// THE one i tried to fix ************
+
+import React, {Component} from "react"  
+import {Text, View, TouchableOpacity} from 'react-native'
+import DocumentPicker from 'react-native-document-picker';
+
+function UploadEAPScreen() {
+const uploadImage = async ()
+    
+} 
+  try {
+    const res = await DocumentPicker.pick({
+      type: [DocumentPicker.types.allFiles],
+    });
+    console.log(
+      rse.uri,
+      res.type,
+      res.name,
+      res.size
+    );
+  
+
+  } catch (err) {
+    if (DocumentPicker.isCancel(err)){
+
+    } else {
+      throw err;
+    }
+}
+  
+
+
+
+
+  render(){
+
+  
+    return(
+      <View style={{flex: 1, justifyContent:"center", alignItems: "center"}}>
+        <TouchableOpacity 
+        onPress={()=> this.uploadImage()}
+        style= {{borderRadius:10, padding: 10, width: "80%", alignItems:"center", backgroundColor:"#d0dbd3"}}>
+        <Text>Upload document</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
+
+
+
+
+/// THE OLD ONE **************
+
 //Import Document Picker
 import DocumentPicker from 'react-native-document-picker';
+
 
 
 function UploadEAPScreen() {
@@ -156,3 +202,51 @@ const styles = StyleSheet.create({
 });
 
 export { UploadEAPScreen };
+
+
+
+
+
+
+
+/// the orignal one****************
+
+
+export default class App extends Component {
+ async openDocumentFile(){
+
+  
+  try {
+    const res = await DocumentPicker.pick({
+      type: [DocumentPicker.types.allFiles],
+    });
+    console.log(
+      rse.uri,
+      res.type,
+      res.name,
+      res.size
+    );
+
+  } catch (err) {
+    if (DocumentPicker.isCancel(err)){
+
+    } else {
+      throw err;
+    }
+  }
+}
+
+
+
+  render(){
+    return(
+      <View style={{flex: 1, justifyContent:"center", alignItems: "center"}}>
+        <TouchableOpacity 
+        onPress={()=> this.openDocumentFile()}
+        style= {{borderRadius:10, padding: 10, width: "80%", alignItems:"center", backgroundColor:"#d0dbd3"}}>
+        <Text>Upload document</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+}
