@@ -4,6 +4,7 @@ import { LoginContext, LoginProvider } from '../Login_Context';
 import TimerContainer from "../components/Timer.js"
 
 import CallContainer from "../components/call911.js";
+import SearchEAPsContainer from '../components/SearchEAPs';
 
 function UniversityScreen({ navigation }) {
     const { isSignedIn, setSignedIn, username, setUsername, userLevel, setUserLevel } = useContext(LoginContext)
@@ -35,6 +36,7 @@ function UniversityScreen({ navigation }) {
                 title="Facility Example"
                 onPress={() => navigation.navigate('EAP')}
             />
+            <SearchEAPsContainer navigation={navigation}/>
         </View>
     );
 }
