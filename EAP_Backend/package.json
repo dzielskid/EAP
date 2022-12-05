@@ -4,6 +4,9 @@
   "description": "Connection to Azure Database",
   "main": "DB_Connection.js",
   "scripts": {
+    "dev": "run-p server start",
+    "start": "expo start",
+    "server": "nodemon Server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,9 +21,11 @@
   "homepage": "https://github.com/befikaduzufan/EAP#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.1",
+    "express": "^4.18.2",
     "express4-tedious": "^0.3.0",
+    "mssql": "^9.0.1",
     "nodemon": "^2.0.20",
+    "npm-run-all": "^4.1.5",
     "tedious": "^15.1.0"
   }
 }

@@ -22,6 +22,7 @@ import { UploadEAPScreen } from "./screens/UploadEAPScreen.js";
 
 import TimerContainer from "./components/Timer.js"
 import CallContainer from "./components/call911.js"
+import SearchInstitutionContainer from './components/SearchInstitution.js';
 // import { searchInstitutions } from "./Database_Functions";
 
 import { LoginContext, LoginProvider } from "./Login_Context.js"
@@ -68,14 +69,10 @@ function HomeScreen({ navigation }) {
             <View style={styles.vSpace}/>
             <CallContainer />
             <TimerContainer />
-            <Button
-                title="University Example"
-                onPress={() => navigation.navigate('Universities')}
-            />
+            <SearchInstitutionContainer navigation={navigation}/>
         </View>
     );
 }
-//const [searchTerm, setTerm] = useState(""); // for search bar
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -119,21 +116,6 @@ function App() {
         </LoginProvider>
 
     );
-    {/**
-        // console.log("App Starting..");
-        return (
-            <View style={styles.container}>
-                <Button onPress={() => getData("/test2")} title="click" />
-                <Text>{returnedData}</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Search Institutions..."
-                    onChangeText={(val) => setTerm(val)} //Sets searchTerm to whatever is typed in search textbox at any moment
-                />
-                <StatusBar style="auto" />
-            </View>
-        );
-    */}
 }
 
 const styles = StyleSheet.create({
