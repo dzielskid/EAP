@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View, TextInput, button, Pressable, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, button, TouchableOpacity, Button } from 'react-native';
 import { LoginContext, LoginProvider } from '../Login_Context';
 
 function LoginScreen({ navigation }) {
@@ -61,17 +61,17 @@ function LoginScreen({ navigation }) {
                 secureTextEntry={ true }
                 onChangeText={(value) => setIPassword(value)}
             />
-            <Button
-                title='Login'
+            <View style={styles.space}/>
+            <TouchableOpacity
+                style={styles.loginButton}
                 onPress={() => {
                     console.log(IUsername + " : " + IPassword)
-                    if (login(IUsername, IPassword)) {
-                        navigation.goBack()
+                    if (login(IUsername, IPassword)) {navigation.goBack()}
                     }
-                }}
-            />
-            <Text>username: {username}</Text>
-            <Text>userlevel: {userLevel}</Text>
+                }
+            >
+                <Text style={styles.loginText}>Login</Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -82,6 +82,27 @@ const styles = StyleSheet.create({
         fontsize: 20,
         borderWidth: 1,
     },
+    space: {
+        height: 50,
+    },
+    loginButton: {
+        backgroundColor: "#2159db",
+        paddingVertical: 5,
+        paddingLeft: "5%",
+        paddingRight: "5%",
+        display: "flex",
+        borderRadius: 20,
+        borderWidth: 2,
+        borderColor: "#173e99",
+        height: 40,
+        width: 150,
+    },
+    loginText: {
+        color: "#f3f5fb",
+        fontSize: 20,
+        fontWeight: "bold",
+        alignSelf: "center"
+    }
 });
 
 export { LoginScreen };
