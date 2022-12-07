@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { StyleSheet, View, Text, Button, TextInput, Pressable , Alert } from 'react-native';
 
 function CreateInstitutionScreen({ navigation }) {
-    const [OrganizationName, setOrganizationName] = useState('WVU soccer Faculty');
-    const [OrganizationAddress, setOrganizationAddress] = useState('13555 Peabody st');
-    const [city, setCity] = useState('Morgantown');
-    const [state, setState] = useState('WV');
-    const [zip, setzip] = useState('26505');
-    const [AdminName, setAdminName] = useState('Dale');
-    const [AdminEmail, setAdminEmail] = useState('Dale.Dzielski@mail.wvu.edu');
+    const [OrganizationName, setOrganizationName] = useState('');
+    const [OrganizationAddress, setOrganizationAddress] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [zip, setzip] = useState('');
+    const [AdminName, setAdminName] = useState('');
+    const [AdminEmail, setAdminEmail] = useState('');
     //const { onPress, title = 'Submit' } = props;
     return (
         <View style={styles.container}
