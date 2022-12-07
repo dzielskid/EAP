@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React from 'react'
+import GLOBAL from '../global.js'
+
 
 const ItemDetails = ({ item, navigation }) => {
   return (
     <View style={{marginVertical: 10}} >
         <TouchableOpacity onPress={() => {
-            navigation.navigate('Universities', {inttitutionID: item.id})
+            GLOBAL.institutionID = parseInt(item.id, 10);
+            navigation.navigate('Universities')
           }} >
             <Text style={{fontSize:14, fontStyle:"bold"}}>{item.name}</Text>
         </TouchableOpacity>

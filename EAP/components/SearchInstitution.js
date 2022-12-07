@@ -59,7 +59,7 @@ const SearchInstitutionContainer = ({navigation}) => {
           name="search"
           size={20}
           color="black"
-          style={{marginLeft: 1, marginRight: 4, marginTop: -50}}
+          style={{marginLeft: 1, marginRight: 4, marginTop: 0}}
         />
         <TextInput  
           value={input}
@@ -82,7 +82,7 @@ export default SearchInstitutionContainer
 
 const styles = StyleSheet.create({
   searchBox: {
-    marginTop:-50,
+    marginTop:0,
     fontSize: 20,
     height: 30,
     width: 250,

@@ -1,12 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useState, useEffect } from "react";
+import { StyleSheet, View } from 'react-native'
+import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { TextInput } from 'react-native-gesture-handler';
 
-import SearchList from './SearchInstitutionsList';
+import SearchList from './SearchEAPsList';
 
-const SearchEAPsContainer = ({ navigation, route }) => {
-  const {institutionID} = route.params;
+const SearchEAPsContainer = ({ navigation }) => {
   const [input, setInput] = useState("");
   
   const EAPs = [
@@ -82,7 +81,7 @@ const SearchEAPsContainer = ({ navigation, route }) => {
           placeholder="Search Facility"
         />
       </View>
-      <SearchList data={EAPs} input={input} setInput={setInput} navigation={navigation} institutionID={institutionID} />
+      <SearchList data={EAPs} input={input} setInput={setInput} navigation={navigation} />
     </View>
   )
 }
