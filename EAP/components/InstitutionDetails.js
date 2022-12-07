@@ -6,7 +6,7 @@ const ItemDetails = ({ item, navigation }) => {
     <View style={{marginVertical: 10}} >
         <TouchableOpacity onPress={() => {
             GLOBAL.institutionID = parseInt(item.id, 10);
-            navigation.navigate('Universities', {institutionID: item.id,})
+            navigation.navigate('Universities')
           }} >
             <Text style={{fontSize:14, fontStyle:"bold"}}>{item.name}</Text>
         </TouchableOpacity>
