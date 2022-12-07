@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import { Feather } from "@expo/vector-icons";
 import { TextInput } from 'react-native-gesture-handler';
 
-import SearchList from './SearchInstitutionsList';
+import SearchList from './SearchEAPsList';
 
-const SearchEAPsContainer = ({ navigation, route }) => {
-  const {institutionID, setInstitutionID} = useState("1");
+const SearchEAPsContainer = ({ navigation }) => {
+  var institutionID = "1";
   const [input, setInput] = useState("");
   
   const EAPs = [

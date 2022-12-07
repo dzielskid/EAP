@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
 import { LoginContext, LoginProvider } from '../Login_Context';
-import TimerContainer from "../components/Timer.js"
 
+import TimerContainer from "../components/Timer.js"
 import CallContainer from "../components/call911.js";
 import SearchEAPsContainer from '../components/SearchEAPs';
 
@@ -32,10 +32,6 @@ function UniversityScreen({ navigation }) {
                     <Text style={ styles.buttonText}>Reports</Text>
                 </TouchableOpacity>
             </View>
-            <Button
-                title="Facility Example"
-                onPress={() => navigation.navigate('EAP')}
-            />
             <SearchEAPsContainer navigation={navigation}/>
         </View>
     );
