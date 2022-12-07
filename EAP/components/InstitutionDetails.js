@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import GLOBAL from '../global.js'
 
+
 const ItemDetails = ({ item, navigation }) => {
   return (
     <View style={{marginVertical: 10}} >
