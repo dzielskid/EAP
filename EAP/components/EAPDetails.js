@@ -5,7 +5,7 @@ const EAPDetails = ({ item, navigation }) => {
   return (
     <View style={{marginVertical: 10}} >
         <TouchableOpacity onPress={() => {
-            GLOBAL.eapID = parseINT(item.id, 10)
+            GLOBAL.eapID = parseInt(item.id, 10)
             navigation.navigate('EAP')
           }} >
             <Text style={{fontSize:14, fontStyle:"bold"}}>{item.name}</Text>
